@@ -1,0 +1,125 @@
+#gs_woov_value {
+    width: 70px;
+}
+
+#term_value[data-type=colorpicker],
+#term_value + .wp-picker-clear,
+#term_value_button {
+    width: 80px;
+}
+
+.gs-wccl-color,
+.gs-wccl-label {
+    border: 1px solid #ccc;
+    background: #fff;
+    display: inline-block;
+    min-width: 20px;
+    height: 20px;
+    overflow: hidden;
+}
+
+.gs-wccl-label {
+    padding: 2px;
+    line-height: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.gs-woov-image {
+    width: 50px;
+}
+
+.gs_woov_dialog_modal .ui-dialog-titlebar-close:before {
+    display: none;
+}
+.gs_woov_dialog_modal .ui-dialog-titlebar-close {
+    width: 25px;
+}
+#gs_woov_dialog_form label {
+    display: block;
+    margin: 10px 0;
+    font-size: 90%
+}
+#gs_woov_dialog_form label > input[type="text"] {
+    margin-top: 5px;
+    width: 100%;
+}
+#gs_woov_dialog_form .dialog_error {
+    font-size: 90%;
+    color: #ff0000;
+}
+#gs_woov_dialog_form .wp-picker-container {
+    display: block;
+    margin-top: 5px;
+}
+
+.gs-woov-bicolor {
+    width:0;
+    height:0;
+    border-bottom: 20px solid;
+    border-left: 20px solid;
+    display: block;
+}
+
+#addtag .wp-picker-container,
+#edittag .wp-picker-container {
+    vertical-align: middle;
+}
+/* fix color picker open */
+#addtag .wp-picker-container .iris-picker,
+#edittag .wp-picker-container .iris-picker,
+#gs_woov_dialog_form .wp-picker-container .iris-picker {
+    display: none !important;
+}
+#addtag .wp-picker-container.wp-picker-active .iris-picker,
+#edittag .wp-picker-container.wp-picker-active .iris-picker,
+#gs_woov_dialog_form .wp-picker-container.wp-picker-active .iris-picker,
+#addtag .wp-picker-container.wp-picker-open .iris-picker,
+#edittag .wp-picker-container.wp-picker-open .iris-picker,
+#gs_woov_dialog_form .wp-picker-container.wp-picker-open .iris-picker {
+    display: block !important;
+}
+.gs_woov_add_color_icon,
+.gs_woov_add_color_icon {
+    width: 15px;
+    height: 15px;
+    border: 1px solid #777;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 15px;
+    font-weight: bold;
+    color: #777;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 6px 6px 6px;
+    cursor: pointer;
+}
+#addtag .wp-picker-container.wp-picker-active + .gs_woov_add_color_icon,
+#edittag .wp-picker-container.wp-picker-active + .gs_woov_add_color_icon,
+#addtag .wp-picker-container.wp-picker-open + .gs_woov_add_color_icon,
+#edittag .wp-picker-container.wp-picker-open + .gs_woov_add_color_icon {
+    display: none;
+}
+
+.ui-dialog.gs_woov_dialog_modal {
+    z-index: 100 !important;
+}
+
+.gswvar-admin-sidebar h3, .gswps-admin-sidebar h3 {
+  font-size: 14px;
+  padding: 8px 12px;
+  margin: 0;
+  line-height: 1.4;
+}
+.gswvar-options select, 
+.gswvar-options input[type=number], 
+.gswvar-options input[type=text] {
+    min-width: 122px;
+    max-width: 122px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+.gswvar-options span.option-desc { font-style: italic; margin-left: 10px; }
+.gswvar-options span.op-color { margin-top: 4px; display: inline-block; }
+.gswvar-options .wp-picker-container { float: left; }
+a.gs-pro-link { color: #F50303; font-weight: bold; }
