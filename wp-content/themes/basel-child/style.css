@@ -1,0 +1,237 @@
+/*
+
+ Theme Name:   Basel Child
+
+ Description:  Basel Child Theme
+
+ Author:       XTemos
+
+ Author URI:   http://xtemos.com
+
+ Template:     basel
+
+ Version:      1.0.0
+
+ Text Domain:  basel-child
+
+ */
+
+
+
+
+
+ /* Your customizations starts here */
+
+ .mc4wp-form .mailchimp-input-icon:before {
+  content: "\f0e0";
+  font-family: FontAwesome;
+  position: absolute;
+  left: 10px;
+  top: 9px;
+  font-size: 14px;
+  opacity: .4;
+}
+.mailchimp-input-icon label{
+  color:#000!important;
+}
+.mailchimp-input-icon input[type=email]{
+  border:1px solid #000!important;
+}
+.mailchimp-input-icon input[type="submit"]{
+  border:1px solid #fff!important;
+  background-color:#000!important;
+}
+.widget-title:before, .widgettitle:before {
+  display:none;
+}
+
+.footer-widget .widget-title{
+  margin-left: 0;
+  padding-bottom: 24px;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0px;
+  line-height: 20px;
+  margin-bottom:0;
+  text-transform: uppercase;
+  font-family:Neue-Helvetica,Arial,Sans-Serif;
+}
+.footer-widget li{
+  color: #000;
+  text-transform: uppercase;
+  font-size: 14px;
+  font-family: inherit;
+  letter-spacing:0px;
+  font-family:Neue-Helvetica,Arial,Sans-Serif;
+}
+.footer-column{
+  padding-left:5px!important;
+  padding-right:5px!important;
+}
+
+.main-nav .menu>li>a {
+  font-family:Neue-Helvetica,Arial,Sans-Serif!important;
+  font-size:16px;
+  font-weight:500!important;
+}
+.right-column .header-links li a {
+  font-style: normal;
+  font-size: 13px;
+  font-family: Neue-Helvetica,Arial,sans-serif;
+}
+.main-nav .menu>li.menu-item-design-full-width .sub-menu-dropdown {
+  width: 100%;
+  padding: 0;
+}
+
+.basel-header-overlap .main-header:not(.header-split) .main-nav .menu>li:not(.callto-btn).item-event-click.item-menu-opened>.sub-menu-dropdown, .basel-header-overlap .main-header:not(.header-split) .main-nav .menu>li:not(.callto-btn).item-event-hover:hover>.sub-menu-dropdown {
+  top: 100%;
+}
+
+
+/* Placehover color */
+.mailchimp-input-icon::-webkit-input-placeholder { /* Edge */
+  color: red;
+}
+.mailchimp-input-icon:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: red;
+}
+.mailchimp-input-icon ::placeholder {
+  color: red;
+}
+.basel-navigation .menu>li.menu-item-design-full-width .sub-sub-menu li a {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 400;
+  padding: 8px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  font-family:Neue-Helvetica,Arial,sans-serif!important;
+}
+.newsletter .mc4wp-form input[type="email"] {
+  background-color: transparent;
+  border: none;
+  border: 1px solid rgba(129,129,129,.35);
+  padding-left: 0;
+  box-shadow: none;
+  max-width: 425px;
+  padding: 0 30px;
+  width: 100%;
+}
+
+#network-footer li {
+  display: inline-block;
+  margin: 1em 2em;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 400;
+}
+#network-footer {
+  text-align:center;
+}
+
+.wp-editor-area {
+  color: #000!important;
+}
+.wp-editor-container {
+  color:#000!important;
+}
+.main-header.header-has-no-bg.color-scheme-light.act-scroll {
+  border: none;
+  box-shadow: none;
+  background-color: rgba(0, 0, 0, 0.55);
+}
+.mc4wp-form div {
+  max-width: 100%;
+  position: relative;
+  margin: 0 auto;
+  width: 500px;
+}
+.wp-editor {
+  color:red;
+}
+
+.amount {
+  color: #000;
+  font-family: Karla,Arial,Helvetica,sans-serif;
+}
+
+.basel-hover-alt .product-title a {
+  display: inline;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+}
+
+.single-product-content .entry-title {
+ color: #000!important;
+ font-size: 18px;
+ letter-spacing: .3px;
+ font-weight: 700!important;
+ text-transform: uppercase;
+ margin-bottom: 0;
+ padding-bottom: 0;
+ line-height: 20px;
+ white-space: nowrap;
+
+}
+.single-product-content p.price {
+  margin-bottom: 12px;
+  font-size: 14px;
+  letter-spacing: .2px;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 12px;
+  padding-bottom: 4px;
+  -ms-flex-pack: start;
+  justify-content: start;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+.single-product .price .amount {
+  color: #000!important;
+  white-space: nowrap!important;
+  font-weight: 700!important;
+}
+.basel-scroll-content p{
+  font-size: 12px;
+  letter-spacing: .2px;
+  line-height: 16px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.basel-scroll-content span{
+  text-transform:none; 
+}
+.product_detail li {
+ display: block;
+ padding: 0;
+ margin-bottom: 16px;
+ margin-top: 15px;
+ background-size: 8px;
+ background-position: 0;
+ background-repeat: no-repeat;
+ position: relative;
+}
+.product_detail li:before {
+  content: "\f04b";
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: 10px;
+  -webkit-font-smoothing: antialiased;
+  padding: 8px;
+
+}
+.product_detail a {
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: .2px;
+  line-height: 16px;
+  font-weight: 400;
+}
+.single-product-content .product_meta {
+  display: none;
+}
