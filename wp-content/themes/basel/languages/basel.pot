@@ -3686,7 +3686,7 @@ msgstr ""
 
 #: inc/template-tags.php:1755
 msgid "Login / Register"
-msgstr ""
+msgstr "Đăng nhập / Đăng ký"
 
 #: inc/template-tags.php:2048
 msgid "Sign in"

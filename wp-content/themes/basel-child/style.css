@@ -4,7 +4,7 @@
 
  Description:  Basel Child Theme
 
- Author:       XTemos
+ Author:       Nino Maxx 
 
  Author URI:   http://xtemos.com
 
@@ -15,14 +15,170 @@
  Text Domain:  basel-child
 
  */
+ /* Default */
+ .mg-b-32 {
+    margin-bottom: 32px;
+}
+/* Default */
+.price ins > .amount {
+    color: #f61111!important;
+}
+.woocommerce-product-attributes-item__value p {
+    border-top: 1px solid #474747;
+    border-bottom: 1px solid #474747;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    width: 100%;
+    max-height: 320px;
+    overflow-y: auto;
+}
 
+.woocommerce-product-attributes-item__value a {
+    color: #2f2f2f;
+    width: 100%;
+    min-width: 250px;
+    float: left;
+    text-align: left;
+    padding-left: 10px;
+    font-size: 14px;
+    line-height: 30px;
+}
+.woocommerce-product-attributes-item__value a:hover {
+  background: #efefef;
+}
+.woocommerce-product-attributes-item__label {
+  display: none;
+}
 
+.price del>.amount {
+  color: #333;
+}
 
+.login-form-side {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%!important;
+    display: none;
+    overflow: auto;
+    background-color: #fff;
+    z-index: 500;
+    transform: translate3d(100%,0,0);
+    -webkit-transform: translate3d(100%,0,0);
+    -ms-transform: translate3d(100%,0,0);
+    -sand-transform: translate3d(100%,0,0);
+    -webkit-transition: transform .3s ease;
+    -moz-transition: transform .3s ease;
+    -o-transition: transform .3s ease;
+    transition: transform .3s ease;
+}
+.login-form-side .widget-heading {
+    margin-bottom: 20px;
+    padding: 10px 10px;
+    background-color: #000;
+    display: flex;
+    margin-top: 5px;
+    flex-direction: row;
+    float: right;
+    margin-right: 90px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    display: -webkit-flex;
+    -webkit-align-items: center;
+    -webkit-flex-wrap: wrap;
+    -webkit-flex-direction: row;
+    -webkit-justify-content: space-between;
+}
+.cart-widget-side {
+    display: none;
+}
+.login-form-side .woocommerce-form-login {
+    border:none!important;
+}
+/*Login Form*/
+.login-form-1 h2 {
+    font-size: 22px;
+    letter-spacing: .3px;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    font-weight: 700;
+    margin-left:20px;
+}
+.pd-t-30 {
+    padding-top: 30px!important;
+}
+.pd-l-80 {
+    padding-left: 80px!important;
+}
 
+.login-container{
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+.login-form-1 span {
+    margin-left: 20px;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+.login-form-1 p {
+    margin-left:0;
+}
+.woocommerce-MyAccount-title {
+    text-align: left;
+}
+.pd-lr-30{
+    padding-left: 30px!important;
+    padding-right: 30px!important;
+}
+.pd-b-20 {
+    padding-bottom: 20px!important;
+}
+.pd-b-30 {
+    padding-bottom: 30px;
+}
+.login-form-side .woocommerce-form-login {
+    padding-left: 0!important;
+    padding-right: 0!important;
+}
+.form-row-username input[type=text], input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: none;
+    border-bottom: 2px solid #ebebeb;
+}
+.btn_primary {
+    display: inline-block;
+    outline: none;
+    cursor: pointer;
+    width: 50%;
+    text-align: center;
+    background-color: #000!important;
+    font-size: 14px;
+    letter-spacing: .2px;
+    text-transform: uppercase!important;
+    font-weight: 100;
+    padding: 15px!important;
+    color: #fff!important;
+    position: relative;
+}
+.btn_primary:hover{
+    background-color: #ebebeb!important;
+    color:#000!important;
+    border: none!important;
+}
+.login-form-side .register-question:before {
+    content: none!important
+}
 
- /* Your customizations starts here */
+/* Your customizations starts here */
 
- .mc4wp-form .mailchimp-input-icon:before {
+.mc4wp-form .mailchimp-input-icon:before {
   content: "\f0e0";
   font-family: FontAwesome;
   position: absolute;
@@ -74,6 +230,7 @@
   font-size:16px;
   font-weight:500!important;
 }
+
 .right-column .header-links li a {
   font-style: normal;
   font-size: 13px;
@@ -128,6 +285,7 @@
 }
 #network-footer {
   text-align:center;
+  padding-top: 20px;
 }
 
 .wp-editor-area {
@@ -162,18 +320,22 @@
   overflow: hidden;
   text-overflow: ellipsis;
   text-transform: uppercase;
+  border:none!important;
+}
+.basel-hover-alt .product-title a:hover {
+  text-decoration: underline;
 }
 
 .single-product-content .entry-title {
- color: #000!important;
- font-size: 18px;
- letter-spacing: .3px;
- font-weight: 700!important;
- text-transform: uppercase;
- margin-bottom: 0;
- padding-bottom: 0;
- line-height: 20px;
- white-space: nowrap;
+  color: #000!important;
+  font-size: 18px;
+  letter-spacing: .3px;
+  font-weight: 700!important;
+  text-transform: uppercase;
+  margin-bottom: 0;
+  padding-bottom: 10px;
+  line-height: 20px;
+  white-space: nowrap;
 
 }
 .single-product-content p.price {
@@ -194,27 +356,28 @@
 .single-product .price .amount {
   color: #000!important;
   white-space: nowrap!important;
-  font-weight: 700!important;
+  font-weight: normal;
+  font-size: 14px;
 }
 .basel-scroll-content p{
   font-size: 12px;
   letter-spacing: .2px;
   line-height: 16px;
-  text-transform: uppercase;
+  text-transform: uppercase; 
   margin-bottom: 12px;
 }
 .basel-scroll-content span{
   text-transform:none; 
 }
 .product_detail li {
- display: block;
- padding: 0;
- margin-bottom: 16px;
- margin-top: 15px;
- background-size: 8px;
- background-position: 0;
- background-repeat: no-repeat;
- position: relative;
+  display: block;
+  padding: 0;
+  margin-bottom: 16px;
+  margin-top: 15px;
+  background-size: 8px;
+  background-position: 0;
+  background-repeat: no-repeat;
+  position: relative;
 }
 .product_detail li:before {
   content: "\f04b";
@@ -234,4 +397,252 @@
 }
 .single-product-content .product_meta {
   display: none;
+}
+
+/* Single product custom */
+
+/* Full-width input fields */
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  box-sizing: border-box;
+}
+
+/* Set a style for all buttons */
+.product_detail button {
+
+  color: #000;
+  padding: 0px 5px 0 0 ;
+  border: none;
+  cursor: pointer;
+  background-color: #fff!important;
+  font-size: 12px;
+  width: 100%;
+  text-align: left;
+}
+.slider-title {
+  text-align: left;
+}
+
+.content_popup {
+  padding: 15px;
+}
+.slider-title:before {
+  content: none;
+}
+
+.product_detail button:hover {
+  opacity: 0.5;
+  border-bottom: 1px solid #000;
+  box-shadow: unset;
+
+}
+
+/* Extra styles for the cancel button */
+.cancelbtn {
+  width: auto;
+  padding: 10px 18px;
+  background-color: #f44336;
+}
+
+/* Center the image and position the close button */
+.imgcontainer {
+  text-align: center;
+  margin: 0px 0 0px 0;
+  position: relative;
+}
+
+img.avatar {
+  width: 40%;
+  border-radius: 50%;
+}
+
+span.psw {
+  float: right;
+  padding-top: 16px;
+}
+.product-image-summary .shop_attributes td {
+    border:none!important;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: #ffffff52;
+  padding-top: 60px;
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #ddd;
+  width: 25%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button (x) */
+.close {
+  position: absolute;
+  right: 20px;
+  top: -5px;
+  color: #000;
+  font-size: 30px;
+}
+
+.close:hover,
+.close:focus {
+  color: red;
+  cursor: pointer;
+}
+
+/* Add Zoom Animation */
+.animate {
+  -webkit-animation: animatezoom 0.5s;
+  animation: animatezoom 0.5s
+}
+
+@-webkit-keyframes animatezoom {
+  from {-webkit-transform: scale(0)} 
+  to {-webkit-transform: scale(1)}
+}
+
+@keyframes animatezoom {
+  from {transform: scale(0)} 
+  to {transform: scale(1)}
+}
+.thumb {
+  margin-bottom: 32px;
+}
+.popuptext .social-icons {
+  display: inline-flex!important;
+}
+
+
+.popup_share {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  font-size: 12px;
+  text-transform: uppercase;
+  color:#000;
+
+}
+.popuptext li:before {
+  content:none;
+}
+/* The actual popup */
+.popup_share .popuptext {
+  visibility: hidden;
+  width: 160px;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: absolute;
+  z-index: 1;
+  top: 25%;
+  left: 65px;
+  margin-left: -80px;
+}
+.content_single_product {
+  padding-top: 80px;
+  padding-left: 60px;
+  padding-right: 50px;
+  height: 500px;
+}
+.sticky_detail {
+   position: fixed;
+   width: 40%;
+   right: 10%;
+   top: 10%;
+}
+.abso {
+    position: absolute!important;
+}
+.popup-quick-view .entry-summary .entry-title {
+    font-size: 22px;
+    margin-bottom: 5px;
+}
+.popup-quick-view .entry-summary .price {
+    font-size: 14px;
+    font-weight: 300!important;
+    margin-bottom: 7px;
+}
+
+
+
+
+
+/* Toggle this class - hide and show the popup */
+.popup_share .show {
+  visibility: visible;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s;
+}
+
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+  from {opacity: 0;} 
+  to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity:1 ;}
+}
+
+
+
+@media only screen and (max-width: 48em) {
+    /*************** ADD MOBILE ONLY CSS HERE  ***************/
+    .btn_primary{
+        width: 100%;
+    }
+
+    .login-form-side .widget-heading {
+        margin-bottom: 20px;
+        padding: 10px 10px;
+        background-color: #000;
+        display: flex;
+        margin-top: -48px;
+        flex-direction: row;
+        float: right;
+        margin-right: -10px;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        display: -webkit-flex;
+        -webkit-align-items: center;
+        -webkit-flex-wrap: wrap;
+        -webkit-flex-direction: row;
+        -webkit-justify-content: space-between;
+    }
+    .pd-l-40-mb {
+        padding-left: 40px!important;
+    }
+
+}
+
+/* Single product custom */
+@media (min-width: 2000px) {
+
+
+    .container {
+        width: 1920px;
+    }
+
 }

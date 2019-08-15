@@ -15,39 +15,39 @@ if( ! function_exists( 'basel_main_loop' ) ) {
 		$blog_design = basel_get_opt('blog_design');
 		?>
 
-		<?php if ( have_posts() ) : ?>
+			<?php if ( have_posts() ) : ?>
 
-			<?php if ( is_tag() && tag_description() ) : // Show an optional tag description ?>
-			<div class="archive-meta"><?php echo tag_description(); ?></div>
-		<?php endif; ?>
+				<?php if ( is_tag() && tag_description() ) : // Show an optional tag description ?>
+					<div class="archive-meta"><?php echo tag_description(); ?></div>
+				<?php endif; ?>
 
-		<?php if ( is_category() && category_description() ) : // Show an optional category description ?>
-		<div class="archive-meta"><?php echo category_description(); ?></div>
-	<?php endif; ?>
+				<?php if ( is_category() && category_description() ) : // Show an optional category description ?>
+					<div class="archive-meta"><?php echo category_description(); ?></div>
+				<?php endif; ?>
 
-	<?php if ( is_author() && get_the_author_meta( 'description' ) ): ?>
-	<?php get_template_part( 'author-bio' ); ?>
-<?php endif ?>
+				<?php if ( is_author() && get_the_author_meta( 'description' ) ): ?>
+					<?php get_template_part( 'author-bio' ); ?>
+				<?php endif ?>
+				
+				<?php if( in_array( $blog_design, array( 'masonry', 'mask' ) ) ): ?>
+					<div class="masonry-container">
+				<?php endif ?>
+					<?php /* The loop */ ?>
+					<?php while ( have_posts() ) : the_post(); ?>
+						<?php get_template_part( 'content', get_post_format() ); ?>
+					<?php endwhile; ?>
+				<?php if( in_array( $blog_design, array( 'masonry', 'mask' ) ) ): ?>
+					</div>
+				<?php endif ?>
 
-<?php if( in_array( $blog_design, array( 'masonry', 'mask' ) ) ): ?>
-	<div class="masonry-container">
-	<?php endif ?>
-	<?php /* The loop */ ?>
-	<?php while ( have_posts() ) : the_post(); ?>
-		<?php get_template_part( 'content', get_post_format() ); ?>
-	<?php endwhile; ?>
-	<?php if( in_array( $blog_design, array( 'masonry', 'mask' ) ) ): ?>
-	</div>
-<?php endif ?>
+				<?php basel_paging_nav(); ?>
 
-<?php basel_paging_nav(); ?>
+			<?php else : ?>
+				<?php get_template_part( 'content', 'none' ); ?>
+			<?php endif; ?>
 
-<?php else : ?>
-	<?php get_template_part( 'content', 'none' ); ?>
-<?php endif; ?>
-
-<?php
-}
+		<?php
+	}
 }
 
 /**
@@ -123,16 +123,16 @@ if( ! function_exists( 'basel_get_content' ) ) {
 			basel_get_full_content( $btn );
 		} elseif( $type == 'excerpt' ) {
 
-			if ( ! empty( $post->post_excerpt ) ) {
-				the_excerpt();
-			} else {
-				$excerpt_length = apply_filters( 'basel_get_excerpt_length', basel_get_opt( 'blog_excerpt_length' ) );
-				echo basel_excerpt_from_content( $post->post_content, intval( $excerpt_length ) );
-			}
+	        if ( ! empty( $post->post_excerpt ) ) {
+	            the_excerpt();
+	        } else {
+		        $excerpt_length = apply_filters( 'basel_get_excerpt_length', basel_get_opt( 'blog_excerpt_length' ) );
+		        echo basel_excerpt_from_content( $post->post_content, intval( $excerpt_length ) );
+	        }
 
-			if( $btn ) {
-				echo '<p class="read-more-section">' . basel_read_more_tag() . '</p>';
-			}
+	        if( $btn ) {
+	        	echo '<p class="read-more-section">' . basel_read_more_tag() . '</p>';
+	        }
 
 		}
 
@@ -182,21 +182,21 @@ if( ! function_exists( 'basel_post_meta' )) {
 			'limit_cats' => 0
 		), $atts));
 		?>
-		<ul class="entry-meta-list">
-			<?php if( get_post_type() === 'post' ): ?>
+			<ul class="entry-meta-list">
+				<?php if( get_post_type() === 'post' ): ?>
 
-				<?php // Is sticky ?>
-				<li class="modified-date"><time class="updated" datetime="<?php echo get_the_modified_date( 'c' ); ?>"><?php echo get_the_modified_date(); ?></time></li>
+					<?php // Is sticky ?>
+					<li class="modified-date"><time class="updated" datetime="<?php echo get_the_modified_date( 'c' ); ?>"><?php echo get_the_modified_date(); ?></time></li>
 
-				<?php if( is_sticky() ): ?>
-					<li class="meta-featured-post"><i class="fa fa-thumb-tack"></i> <?php esc_html_e( 'Featured', 'basel' ) ?></li>
-				<?php endif; ?>
+					<?php if( is_sticky() ): ?>
+						<li class="meta-featured-post"><i class="fa fa-thumb-tack"></i> <?php esc_html_e( 'Featured', 'basel' ) ?></li>
+					<?php endif; ?>
 
-				<?php // Author ?>
-				<?php if ($author == 1): ?>
-					<li class="meta-author">
-						<?php if ( $labels == 1 && ! $short_labels ): ?>
-							<?php esc_html_e('Posted by', 'basel'); ?>
+					<?php // Author ?>
+					<?php if ($author == 1): ?>
+						<li class="meta-author">
+							<?php if ( $labels == 1 && ! $short_labels ): ?>
+								<?php esc_html_e('Posted by', 'basel'); ?>
 							<?php elseif($labels == 1 && $short_labels): ?>
 								<?php esc_html_e('By', 'basel'); ?>
 							<?php endif; ?>
@@ -232,19 +232,19 @@ if( ! function_exists( 'basel_post_meta' )) {
 					<?php endif; ?>
 				<?php endif; ?>
 			</ul>
-			<?php
-		}
+		<?php
 	}
+}
 
-	if( ! function_exists( 'basel_post_date' ) ) {
-		function basel_post_date() {
-			$has_title = get_the_title() != '';
-			$attr = '';
-			if( ! $has_title && ! is_single() ) {
-				$url = get_the_permalink();
-				$attr = 'window.location=\''. $url .'\';';
-			}
-			?>
+if( ! function_exists( 'basel_post_date' ) ) {
+	function basel_post_date() {
+		$has_title = get_the_title() != '';
+		$attr = '';
+		if( ! $has_title && ! is_single() ) {
+			$url = get_the_permalink();
+			$attr = 'window.location=\''. $url .'\';';
+		}
+		?>
 			<div class="post-date" onclick="<?php echo esc_attr($attr); ?>">
 				<span class="post-date-day">
 					<?php echo get_the_time('d') ?>
@@ -253,9 +253,9 @@ if( ! function_exists( 'basel_post_meta' )) {
 					<?php echo get_the_time('M') ?>
 				</span>
 			</div>
-			<?php
-		}
+		<?php
 	}
+}
 
 
 /**
@@ -267,11 +267,11 @@ if( ! function_exists( 'basel_entry_meta' ) ) {
 	function basel_entry_meta() {
 		if( apply_filters( 'basel_entry_meta' , false ) ) {
 			?>
-			<footer class="entry-meta">
-				<?php if( is_user_logged_in() ): ?>
-					<p><?php edit_post_link( esc_html__( 'Edit', 'basel' ), '<span class="edit-link">', '</span>' ); ?></p>
-				<?php endif; ?>
-			</footer><!-- .entry-meta -->
+				<footer class="entry-meta">
+					<?php if( is_user_logged_in() ): ?>
+						<p><?php edit_post_link( esc_html__( 'Edit', 'basel' ), '<span class="edit-link">', '</span>' ); ?></p>
+					<?php endif; ?>
+				</footer><!-- .entry-meta -->
 			<?php 
 		}
 	}
@@ -292,65 +292,65 @@ if( ! function_exists( 'basel_paging_nav' ) ) {
 			return;
 		}
 		?>
-
-		<ul>
-			<?php if( get_previous_posts_link() ) :?>
-				<li class="next">
-					<?php previous_posts_link( esc_html__( 'Newer Posts &rarr;', 'basel' ) ); ?>
-				</li>
-			<?php endif; ?>
-
-			<?php if( get_next_posts_link() ) :?>
-				<li class="previous">
-					<?php next_posts_link( esc_html__( '&larr; Older Posts', 'basel' ) ); ?>
-				</li>
-			<?php endif; ?>
-		</ul>
-
+			
+			<ul>
+				<?php if( get_previous_posts_link() ) :?>
+					<li class="next">
+						<?php previous_posts_link( esc_html__( 'Newer Posts &rarr;', 'basel' ) ); ?>
+					</li>
+				<?php endif; ?>
+				
+				<?php if( get_next_posts_link() ) :?>
+					<li class="previous">
+						<?php next_posts_link( esc_html__( '&larr; Older Posts', 'basel' ) ); ?>
+					</li>
+				<?php endif; ?>
+			</ul>
+	
 		<?php 
 	}
 }
 
 if( ! function_exists( 'query_pagination' ) ) {
 	function query_pagination($pages = '', $range = 2) {  
-		$showitems = ($range * 2)+1;  
+	     $showitems = ($range * 2)+1;  
 
-		global $paged;
+	     global $paged;
+	     
+	     if(empty($paged)) $paged = 1;
 
-		if(empty($paged)) $paged = 1;
+	     if($pages == '')
+	     {
+	         global $wp_query;
+	         $pages = $wp_query->max_num_pages;
+	         if(!$pages)
+	         {
+	             $pages = 1;
+	         }
+	     }   
 
-		if($pages == '')
-		{
-			global $wp_query;
-			$pages = $wp_query->max_num_pages;
-			if(!$pages)
-			{
-				$pages = 1;
-			}
-		}   
+	     if(1 != $pages)
+	     {
+	         echo "<div class='basel-pagination'>";
+	         if($paged > 2 && $paged > $range+1 && $showitems < $pages) echo "<a href='".get_pagenum_link(1)."'>&laquo;</a>";
+	         if($paged > 1 && $showitems < $pages) echo "<a href='".get_pagenum_link($paged - 1)."'>&lsaquo;</a>";
 
-		if(1 != $pages)
-		{
-			echo "<div class='basel-pagination'>";
-			if($paged > 2 && $paged > $range+1 && $showitems < $pages) echo "<a href='".get_pagenum_link(1)."'>&laquo;</a>";
-			if($paged > 1 && $showitems < $pages) echo "<a href='".get_pagenum_link($paged - 1)."'>&lsaquo;</a>";
-
-			for ($i=1; $i <= $pages; $i++)
-			{
-				if (1 != $pages &&( !($i >= $paged+$range+1 || $i <= $paged-$range-1) || $pages <= $showitems ))
-				{
+	         for ($i=1; $i <= $pages; $i++)
+	         {
+	             if (1 != $pages &&( !($i >= $paged+$range+1 || $i <= $paged-$range-1) || $pages <= $showitems ))
+	             {
 					if ( $paged == $i ) {
 						echo "<span class='current'>".$i."</span>";
 					} else {
 						echo "<a href='".get_pagenum_link($i)."' class='inactive' >".$i."</a>";
 					}
-				}
-			}
+	             }
+	         }
 
-			if ($paged < $pages && $showitems < $pages) echo "<a href='".get_pagenum_link($paged + 1)."'>&rsaquo;</a>";  
-			if ($paged < $pages-1 &&  $paged+$range-1 < $pages && $showitems < $pages) echo "<a href='".get_pagenum_link($pages)."'>&raquo;</a>";
-			echo "</div>\n";
-		}
+	         if ($paged < $pages && $showitems < $pages) echo "<a href='".get_pagenum_link($paged + 1)."'>&rsaquo;</a>";  
+	         if ($paged < $pages-1 &&  $paged+$range-1 < $pages && $showitems < $pages) echo "<a href='".get_pagenum_link($pages)."'>&raquo;</a>";
+	         echo "</div>\n";
+	     }
 	}
 }
 
@@ -380,8 +380,8 @@ if( !function_exists( 'basel_favicon' ) ) {
 		}
 
 		?>
-		<link rel="shortcut icon" href="<?php echo esc_attr($favicon); ?>">
-		<link rel="apple-touch-icon-precomposed" sizes="152x152" href="<?php echo esc_attr($touch_icon); ?>">
+			<link rel="shortcut icon" href="<?php echo esc_attr($favicon); ?>">
+			<link rel="apple-touch-icon-precomposed" sizes="152x152" href="<?php echo esc_attr($touch_icon); ?>">
 		<?php
 	}
 
@@ -403,7 +403,7 @@ if( !function_exists( 'basel_get_logo' ) ) {
 		}
 
 		?>
-		<a href="<?php echo esc_url( home_url('/') ); ?>" rel="home"><img src="<?php echo esc_url( $logo_src ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>"></a>
+			<a href="<?php echo esc_url( home_url('/') ); ?>" rel="home"><img src="<?php echo esc_url( $logo_src ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>"></a>
 		<?php 
 	}
 }
@@ -418,11 +418,11 @@ if( ! function_exists( 'basel_page_top_part' ) ) {
 		?>
 		<?php if ( ! basel_is_woo_ajax() ): ?>
 			<div class="main-page-wrapper">
-				<?php elseif( basel_is_pjax() ): ?>
-					<?php _wp_render_title_tag(); ?>
-				<?php endif ?>
+		<?php elseif( basel_is_pjax() ): ?>
+			<?php _wp_render_title_tag(); ?>
+		<?php endif ?>
 
-				<?php 
+		<?php 
 
 			/**
 			 * basel_after_header hook
@@ -430,29 +430,29 @@ if( ! function_exists( 'basel_page_top_part' ) ) {
 			 * @hooked basel_show_page_title - 10
 			 */
 			do_action( 'basel_after_header' ); 
-			?>
+		?>
 
-			<!-- MAIN CONTENT AREA -->
-			<?php $main_container_class = basel_get_main_container_class(); ?>
-			<div class="<?php echo esc_attr( $main_container_class ); ?>">
-				<div class="row">
-					<?php
-				}
-			}
+		<!-- MAIN CONTENT AREA -->
+		<?php $main_container_class = basel_get_main_container_class(); ?>
+		<div class="<?php echo esc_attr( $main_container_class ); ?>">
+			<div class="row">
+		<?php
+	}
+}
 
 // **********************************************************************// 
 // ! Page bottom part
 // **********************************************************************// 
 
-			if( ! function_exists( 'basel_page_bottom_part' ) ) {
-				function basel_page_bottom_part() {
-					?>
+if( ! function_exists( 'basel_page_bottom_part' ) ) {
+	function basel_page_bottom_part() {
+		?>
 				</div> <!-- end row -->
 			</div> <!-- end container -->
-			<?php
-			if ( ! basel_is_woo_ajax() ): ?>
+		<?php
+		if ( ! basel_is_woo_ajax() ): ?>
 			</div><!-- .main-page-wrapper --> 
-			<?php 
+		<?php 
 		endif;
 	}
 }
@@ -465,10 +465,10 @@ if( ! function_exists( 'basel_body_frame' ) ) {
 	function basel_body_frame() {
 		if( ! basel_get_opt( 'body-border' ) ) return;
 		?>
-		<span class="basel-frame-left"></span>
-		<span class="basel-frame-top"></span>
-		<span class="basel-frame-right"></span>
-		<span class="basel-frame-bottom"></span>
+			<span class="basel-frame-left"></span>
+			<span class="basel-frame-top"></span>
+			<span class="basel-frame-right"></span>
+			<span class="basel-frame-bottom"></span>
 		<?php
 	}
 	add_action( 'basel_after_footer', 'basel_body_frame' );
@@ -646,13 +646,13 @@ if( ! function_exists( 'basel_page_title' ) ) {
 	add_action( 'basel_after_header', 'basel_page_title', 10 );
 
 	function basel_page_title() {
-		global $wp_query, $post;
+        global $wp_query, $post;
 
         // Remove page title for dokan store list page
 
-		if( function_exists( 'dokan_is_store_page' )  && dokan_is_store_page() ) {
-			return '';
-		}
+        if( function_exists( 'dokan_is_store_page' )  && dokan_is_store_page() ) {
+        	return '';
+        }
 
 		$page_id = 0;
 
@@ -736,29 +736,29 @@ if( ! function_exists( 'basel_page_title' ) ) {
 			$title_class .= ' post-title-large-image';
 
 			?>
-			<div class="page-title <?php echo esc_attr( $title_class ); ?>" style="<?php echo esc_attr( $style ); ?>">
-				<div class="container">
-					<header class="entry-header">
-						<?php if ( get_the_category_list( ', ' ) ): ?>
-							<div class="meta-post-categories"><?php echo get_the_category_list( ', ' ); ?></div>
-						<?php endif ?>
+				<div class="page-title <?php echo esc_attr( $title_class ); ?>" style="<?php echo esc_attr( $style ); ?>">
+					<div class="container">
+						<header class="entry-header">
+							<?php if ( get_the_category_list( ', ' ) ): ?>
+								<div class="meta-post-categories"><?php echo get_the_category_list( ', ' ); ?></div>
+							<?php endif ?>
 
-						<h1 class="entry-title"><?php the_title(); ?></h1>
+							<h1 class="entry-title"><?php the_title(); ?></h1>
 
-						<div class="entry-meta basel-entry-meta">
-							<?php basel_post_meta(array(
-								'labels' => 1,
-								'author' => 1,
-								'author_ava' => 1,
-								'date' => 1,
-								'edit' => 0,
-								'comments' => 1,
-								'short_labels' => 0
-							)); ?>
-						</div>
-					</header>
+							<div class="entry-meta basel-entry-meta">
+								<?php basel_post_meta(array(
+									'labels' => 1,
+									'author' => 1,
+									'author_ava' => 1,
+									'date' => 1,
+									'edit' => 0,
+									'comments' => 1,
+									'short_labels' => 0
+								)); ?>
+							</div>
+						</header>
+					</div>
 				</div>
-			</div>
 			<?php
 			return;
 		}
@@ -767,30 +767,30 @@ if( ! function_exists( 'basel_page_title' ) ) {
 		if( is_singular( 'page' ) && ( ! $page_for_posts || ! is_page( $page_for_posts ) ) ):
 			$title = get_the_title();
 
-		?>
-		<div class="page-title <?php echo esc_attr( $title_class ); ?>" style="<?php echo esc_attr( $style ); ?>">
-			<div class="container">
-				<header class="entry-header">
-					<?php if( $page_title ): ?><h1 class="entry-title"><?php echo esc_html( $title ); ?></h1><?php endif; ?>
-					<?php if( $breadcrumbs ) basel_current_breadcrumbs( 'pages' ); ?>
-				</header><!-- .entry-header -->
-			</div>
-		</div>
-		<?php
-		return;
-	endif;
+			?>
+				<div class="page-title <?php echo esc_attr( $title_class ); ?>" style="<?php echo esc_attr( $style ); ?>">
+					<div class="container">
+						<header class="entry-header">
+							<?php if( $page_title ): ?><h1 class="entry-title"><?php echo esc_html( $title ); ?></h1><?php endif; ?>
+							<?php if( $breadcrumbs ) basel_current_breadcrumbs( 'pages' ); ?>
+						</header><!-- .entry-header -->
+					</div>
+				</div>
+			<?php
+			return;
+		endif;
 
 
 		// Heading for blog and archives
-	if( is_singular( 'post' ) || basel_is_blog_archive() ):
+		if( is_singular( 'post' ) || basel_is_blog_archive() ):
 
-		$title = ( ! empty( $page_for_posts ) ) ? get_the_title( $page_for_posts ) : esc_html__( 'Blog', 'basel' );
+			$title = ( ! empty( $page_for_posts ) ) ? get_the_title( $page_for_posts ) : esc_html__( 'Blog', 'basel' );
 
-	if( is_tag() ) {
-		$title = esc_html__( 'Tag Archives: ', 'basel')  . single_tag_title( '', false ) ;
-	}
+			if( is_tag() ) {
+				$title = esc_html__( 'Tag Archives: ', 'basel')  . single_tag_title( '', false ) ;
+			}
 
-	if( is_category() ) {
+			if( is_category() ) {
 				$title = '<span>' . single_cat_title( '', false ) . '</span>'; //esc_html__( 'Category Archives: ', 'basel') . 
 			}
 
@@ -831,14 +831,14 @@ if( ! function_exists( 'basel_page_title' ) ) {
 			}
 
 			?>
-			<div class="page-title <?php echo esc_attr( $title_class ); ?> title-blog" style="<?php echo esc_attr( $style ); ?>">
-				<div class="container">
-					<header class="entry-header">
-						<?php if( $page_title ): ?><h3 class="entry-title"><?php echo wp_kses( $title, basel_get_allowed_html() ); ?></h3><?php endif; ?>
-						<?php if( $breadcrumbs ) basel_current_breadcrumbs( 'pages' ); ?>
-					</header><!-- .entry-header -->
+				<div class="page-title <?php echo esc_attr( $title_class ); ?> title-blog" style="<?php echo esc_attr( $style ); ?>">
+					<div class="container">
+						<header class="entry-header">
+							<?php if( $page_title ): ?><h3 class="entry-title"><?php echo wp_kses( $title, basel_get_allowed_html() ); ?></h3><?php endif; ?>
+							<?php if( $breadcrumbs ) basel_current_breadcrumbs( 'pages' ); ?>
+						</header><!-- .entry-header -->
+					</div>
 				</div>
-			</div>
 			<?php
 			return;
 		endif;
@@ -848,75 +848,75 @@ if( ! function_exists( 'basel_page_title' ) ) {
 
 			$title = get_the_title( $page_for_projects );
 
-		if( is_tax( 'project-cat' ) ) {
-			$title = single_term_title( '', false );
-		}
+			if( is_tax( 'project-cat' ) ) {
+				$title = single_term_title( '', false );
+			}
 
-		?>
-		<div class="page-title <?php echo esc_attr( $title_class ); ?> title-blog" style="<?php echo esc_attr( $style ); ?>">
-			<div class="container">
-				<header class="entry-header">
-					<?php if( $page_title ): ?><h1 class="entry-title"><?php echo wp_kses( $title, basel_get_allowed_html() ); ?></h1><?php endif; ?>
-					<?php if( $breadcrumbs ) basel_current_breadcrumbs( 'pages' ); ?>
-				</header><!-- .entry-header -->
-			</div>
-		</div>
-		<?php
-		return;
-	endif;
+			?>
+				<div class="page-title <?php echo esc_attr( $title_class ); ?> title-blog" style="<?php echo esc_attr( $style ); ?>">
+					<div class="container">
+						<header class="entry-header">
+							<?php if( $page_title ): ?><h1 class="entry-title"><?php echo wp_kses( $title, basel_get_allowed_html() ); ?></h1><?php endif; ?>
+							<?php if( $breadcrumbs ) basel_current_breadcrumbs( 'pages' ); ?>
+						</header><!-- .entry-header -->
+					</div>
+				</div>
+			<?php
+			return;
+		endif;
 
 		// Page heading for shop page
-	if( basel_woocommerce_installed() && ( is_shop() || is_product_category() || is_product_tag() || is_singular( "product" ) || basel_is_product_attribute_archieve() )
-		&& ( $shop_categories || $shop_title )
-	):
+		if( basel_woocommerce_installed() && ( is_shop() || is_product_category() || is_product_tag() || is_singular( "product" ) || basel_is_product_attribute_archieve() )
+			&& ( $shop_categories || $shop_title )
+		 ):
 
-		if( is_product_category() ) {
+			if( is_product_category() ) {
 
-			$cat = $wp_query->get_queried_object();
+		        $cat = $wp_query->get_queried_object();
 
-			$cat_image = basel_get_category_page_title_image( $cat );
+				$cat_image = basel_get_category_page_title_image( $cat );
 
-			if( $cat_image != '') {
-				$style = "background-image: url(" . $cat_image . ")";
+				if( $cat_image != '') {
+					$style = "background-image: url(" . $cat_image . ")";
+				}
 			}
-		}
 
-		if( ! $shop_title ) {
-			$title_class .= ' without-title';
-		}
+			if( ! $shop_title ) {
+				$title_class .= ' without-title';
+			}
 
-		?>
-		<?php if ( apply_filters( 'woocommerce_show_page_title', true ) && ! is_singular( "product" ) ) : ?>
-		<div class="page-title <?php echo esc_attr( $title_class ); ?> title-shop" style="<?php echo esc_attr( $style ); ?>">
-			<div class="container">
-				<div class="nav-shop">
+			?>
+				<?php if ( apply_filters( 'woocommerce_show_page_title', true ) && ! is_singular( "product" ) ) : ?>
+					<div class="page-title <?php echo esc_attr( $title_class ); ?> title-shop" style="<?php echo esc_attr( $style ); ?>">
+						<div class="container">
+							<div class="nav-shop">
+								
+								<?php if ( is_product_category() || is_product_tag() ): ?>
+									<?php basel_back_btn(); ?>
+								<?php endif ?>
 
-					<?php if ( is_product_category() || is_product_tag() ): ?>
-					<?php basel_back_btn(); ?>
-				<?php endif ?>
+								<?php if ( $shop_title ): ?>
+									<h1 class="entry-title"><?php woocommerce_page_title(); ?></h1>
+								<?php endif ?>
+								
+								<?php if( ! is_singular( "product" ) && $shop_categories ) basel_product_categories_nav(); ?>
 
-				<?php if ( $shop_title ): ?>
-					<h1 class="entry-title"><?php woocommerce_page_title(); ?></h1>
-				<?php endif ?>
+							</div>
+						</div>
+					</div>
+				<?php endif; ?>
 
-				<?php if( ! is_singular( "product" ) && $shop_categories ) basel_product_categories_nav(); ?>
-
-			</div>
-		</div>
-	</div>
-<?php endif; ?>
-
-<?php
-
-return;
-endif;
-}
+			<?php
+			
+			return;
+		endif;
+	}
 }
 
 if( ! function_exists( 'basel_back_btn' ) ) {
 	function basel_back_btn() {
 		?>
-		<a href="javascript:baselThemeModule.backHistory()" class="basel-back-btn basel-tooltip"><span><?php esc_html_e('Back', 'basel') ?></span></a>
+			<a href="javascript:baselThemeModule.backHistory()" class="basel-back-btn basel-tooltip"><span><?php esc_html_e('Back', 'basel') ?></span></a>
 		<?php
 	}
 }
@@ -934,8 +934,8 @@ if( ! function_exists( 'basel_get_category_page_title_image' ) ) {
 		if( $cat_image != '' ) {
 			return $cat_image;
 		} else if( ! empty( $cat->parent ) ) {
-			$parent = get_term_by( 'term_id', $cat->parent, $taxonomy );
-			return basel_get_category_page_title_image( $parent );
+	    	$parent = get_term_by( 'term_id', $cat->parent, $taxonomy );
+	    	return basel_get_category_page_title_image( $parent );
 		} else {
 			return '';
 		}
@@ -1090,7 +1090,7 @@ if( ! function_exists( 'basel_breadcrumbs' ) ) {
 				echo wp_kses_post( $before ) . sprintf($text['tag'], single_tag_title('', false)) . wp_kses_post( $after );
 
 			} elseif ( is_author() ) {
-				global $author;
+		 		global $author;
 				$userdata = get_userdata($author);
 				echo wp_kses_post( $before ) . sprintf($text['author'], $userdata->display_name) . wp_kses_post( $after );
 
@@ -1124,11 +1124,11 @@ if( ! function_exists( 'basel_promo_popup' ) ) {
 		if( ! basel_get_opt( 'promo_popup' ) ) return;
 
 		?>
-		<div class="basel-promo-popup">
-			<div class="basel-popup-inner">
-				<?php echo do_shortcode( basel_get_opt( 'popup_text' ) ); ?>
+			<div class="basel-promo-popup">
+				<div class="basel-popup-inner">
+					<?php echo do_shortcode( basel_get_opt( 'popup_text' ) ); ?>
+				</div>
 			</div>
-		</div>
 		<?php
 	}
 }
@@ -1147,19 +1147,19 @@ if( ! function_exists( 'basel_cookies_popup' ) ) {
 		$page_id = basel_get_opt( 'cookies_policy_page' );
 
 		?>
-		<div class="basel-cookies-popup">
-			<div class="basel-cookies-inner">
-				<div class="cookies-info-text">
-					<?php echo do_shortcode( basel_get_opt( 'cookies_text' ) ); ?>
-				</div>
-				<div class="cookies-buttons">
-					<a href="#" class="cookies-accept-btn"><?php _e( 'Accept' , 'basel' ); ?></a>
-					<?php if ( $page_id ): ?>
-						<a href="<?php echo get_permalink( $page_id ); ?>" class="cookies-more-btn"><?php _e( 'More info' , 'basel' ); ?></a>
-					<?php endif ?>
+			<div class="basel-cookies-popup">
+				<div class="basel-cookies-inner">
+					<div class="cookies-info-text">
+						<?php echo do_shortcode( basel_get_opt( 'cookies_text' ) ); ?>
+					</div>
+					<div class="cookies-buttons">
+						<a href="#" class="cookies-accept-btn"><?php _e( 'Accept' , 'basel' ); ?></a>
+						<?php if ( $page_id ): ?>
+							<a href="<?php echo get_permalink( $page_id ); ?>" class="cookies-more-btn"><?php _e( 'More info' , 'basel' ); ?></a>
+						<?php endif ?>
+					</div>
 				</div>
 			</div>
-		</div>
 		<?php
 	}
 }
@@ -1198,21 +1198,21 @@ if( ! function_exists( 'basel_header_block_logo' ) ) {
 		$logo = $protocol. str_replace(array('http://', 'https://'), '', $logo);
 
 		?>
-		<div class="site-logo">
-			<div class="basel-logo-wrap<?php if( $has_sticky_logo ) echo " switch-logo-enable"; ?>">
-				<a href="<?php echo esc_url( home_url('/') ); ?>" class="basel-logo basel-main-logo" rel="home">
-					<?php echo '<img src="' . $logo . '" alt="' . get_bloginfo( 'name' ) . '" />'; ?>
-				</a>
-				<?php if ( $has_sticky_logo ): ?>
-					<?php 
-					$logo_sticky = $protocol . str_replace( array( 'http://', 'https://' ), '', $logo_sticky_uploaded['url'] );
-					?>
-					<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="basel-logo basel-sticky-logo" rel="home">
-						<?php echo '<img src="' . $logo_sticky . '" alt="' . get_bloginfo( 'name' ) . '" />'; ?>
+			<div class="site-logo">
+				<div class="basel-logo-wrap<?php if( $has_sticky_logo ) echo " switch-logo-enable"; ?>">
+					<a href="<?php echo esc_url( home_url('/') ); ?>" class="basel-logo basel-main-logo" rel="home">
+						<?php echo '<img src="' . $logo . '" alt="' . get_bloginfo( 'name' ) . '" />'; ?>
 					</a>
-				<?php endif ?>
+					<?php if ( $has_sticky_logo ): ?>
+						<?php 
+							$logo_sticky = $protocol . str_replace( array( 'http://', 'https://' ), '', $logo_sticky_uploaded['url'] );
+						 ?>
+						<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="basel-logo basel-sticky-logo" rel="home">
+							<?php echo '<img src="' . $logo_sticky . '" alt="' . get_bloginfo( 'name' ) . '" />'; ?>
+						</a>
+					<?php endif ?>
+				</div>
 			</div>
-		</div>
 		<?php
 	}
 }
@@ -1224,18 +1224,18 @@ if( ! function_exists( 'basel_header_block_logo' ) ) {
 if( ! function_exists( 'basel_header_block_widget_area' ) ) {
 	function basel_header_block_widget_area() {
 		?>
-		<div class="widgetarea-head">
-			<?php
+			<div class="widgetarea-head">
+				<?php
+				
+					$header_text = basel_get_opt( 'header_area' );
 
-			$header_text = basel_get_opt( 'header_area' );
-
-			if( $header_text != '' ) {
-				echo do_shortcode( $header_text );
-			} else if( is_active_sidebar( 'header-widgets' ) ) {
-				dynamic_sidebar( 'header-widgets' );
-			}
-			?>
-		</div>
+					if( $header_text != '' ) {
+						echo do_shortcode( $header_text );
+					} else if( is_active_sidebar( 'header-widgets' ) ) {
+						dynamic_sidebar( 'header-widgets' );
+					}
+				?>
+			</div>
 		<?php
 	}
 }
@@ -1292,13 +1292,13 @@ if( ! function_exists( 'basel_header_block_cart' ) ) {
 			<?php if ( $position != 'side' && $position != 'without' ): ?>
 				<div class="dropdown-wrap-cat">
 					<div class="dropdown-cat">
-						<?php 
+							<?php 
 
 							// Insert cart widget placeholder - code in woocommerce.js will update this on page load
-						echo '<div class="widget woocommerce widget_shopping_cart"><div class="widget_shopping_cart_content"></div></div>';
+							echo '<div class="widget woocommerce widget_shopping_cart"><div class="widget_shopping_cart_content"></div></div>';
 
 
-						?> 
+							?> 
 					</div>
 				</div>
 			<?php endif ?>
@@ -1320,17 +1320,17 @@ if( ! function_exists( 'basel_header_block_search' ) ) {
 		$classes .= ' basel-search-' . $header_search;
 		if ( basel_get_opt( 'mobile_search_icon' ) ) $classes .= ' mobile-search-icon';
 		?>
-		<div class="<?php echo esc_attr( $classes ); ?>">
-			<a href="#">
-				<i class="fa fa-search"></i>
-			</a>
-			<div class="basel-search-wrapper">
-				<div class="basel-search-inner">
-					<span class="basel-close-search"><?php esc_html_e('close', 'basel'); ?></span>
-					<?php basel_header_block_search_extended( false, true, array('thumbnail' => 1, 'price' => 1), false ); ?>
+			<div class="<?php echo esc_attr( $classes ); ?>">
+				<a href="#">
+					<i class="fa fa-search"></i>
+				</a>
+				<div class="basel-search-wrapper">
+					<div class="basel-search-inner">
+						<span class="basel-close-search"><?php esc_html_e('close', 'basel'); ?></span>
+						<?php basel_header_block_search_extended( false, true, array('thumbnail' => 1, 'price' => 1), false ); ?>
+					</div>
 				</div>
 			</div>
-		</div>
 		<?php
 	}
 }
@@ -1375,34 +1375,34 @@ if( ! function_exists( 'basel_header_block_search_extended' ) ) {
 
 		switch ( $search_post_type ) {
 			case 'product':
-			$placeholder = esc_attr_x( 'Search for products', 'basel' );
-			$description = esc_html__( 'Start typing to see products you are looking for.', 'basel' );
+				$placeholder = esc_attr_x( 'Search for products', 'basel' );
+				$description = esc_html__( 'Start typing to see products you are looking for.', 'basel' );
 			break;
 
 			case 'portfolio':
-			$placeholder = esc_attr_x( 'Search for projects', 'basel' );
-			$description = esc_html__( 'Start typing to see projects you are looking for.', 'basel' );
+				$placeholder = esc_attr_x( 'Search for projects', 'basel' );
+				$description = esc_html__( 'Start typing to see projects you are looking for.', 'basel' );
 			break;
-
+		
 			default:
-			$placeholder = esc_attr_x( 'Search for posts', 'basel' );
-			$description = esc_html__( 'Start typing to see posts you are looking for.', 'basel' );
+				$placeholder = esc_attr_x( 'Search for posts', 'basel' );
+				$description = esc_html__( 'Start typing to see posts you are looking for.', 'basel' );
 			break;
 		}
 
 		if( $wrap ) echo '<div class="search-extended">';
 		?>
-		<form role="search" method="get" id="searchform" class="searchform <?php echo esc_attr( $class ); ?>" action="<?php echo esc_url( home_url( '/' ) ); ?>" <?php echo ! empty( $data ) ? $data : ''; ?>>
-			<div>
-				<label class="screen-reader-text"><?php esc_html_e( 'Search for:', 'basel' ); ?></label>
-				<input type="text" class="search-field" placeholder="<?php echo esc_attr( $placeholder ); ?>" value="<?php echo get_search_query(); ?>" name="s" id="s" />
-				<input type="hidden" name="post_type" id="post_type" value="<?php echo esc_attr( $search_post_type ); ?>">
-				<?php if( $show_categories ) basel_show_categories_dropdown(); ?>
-				<button type="submit" id="searchsubmit" value="<?php echo esc_attr_x( 'Search', 'submit button', 'basel' ); ?>"><?php echo esc_html_x( 'Search', 'submit button', 'basel' ); ?></button>
-
-			</div>
-		</form>
-		<div class="search-results-wrapper"><div class="basel-scroll"><div class="basel-search-results basel-scroll-content"></div></div></div>
+			<form role="search" method="get" id="searchform" class="searchform <?php echo esc_attr( $class ); ?>" action="<?php echo esc_url( home_url( '/' ) ); ?>" <?php echo ! empty( $data ) ? $data : ''; ?>>
+				<div>
+					<label class="screen-reader-text"><?php esc_html_e( 'Search for:', 'basel' ); ?></label>
+					<input type="text" class="search-field" placeholder="<?php echo esc_attr( $placeholder ); ?>" value="<?php echo get_search_query(); ?>" name="s" id="s" />
+					<input type="hidden" name="post_type" id="post_type" value="<?php echo esc_attr( $search_post_type ); ?>">
+					<?php if( $show_categories ) basel_show_categories_dropdown(); ?>
+					<button type="submit" id="searchsubmit" value="<?php echo esc_attr_x( 'Search', 'submit button', 'basel' ); ?>"><?php echo esc_html_x( 'Search', 'submit button', 'basel' ); ?></button>
+					
+				</div>
+			</form>
+			<div class="search-results-wrapper"><div class="basel-scroll"><div class="basel-search-results basel-scroll-content"></div></div></div>
 		<?php
 		if( $wrap ) echo '</div>';
 	}
@@ -1429,15 +1429,15 @@ if( ! function_exists( 'basel_show_categories_dropdown' ) ) {
 					<ul class="dropdown-list" style="display:none;">
 						<li style="display:none;"><a href="#" data-val="0"><?php esc_html_e('Select category', 'basel'); ?></a></li>
 						<?php
-						if( ! apply_filters( 'basel_show_only_parent_categories_dropdown', false ) ) {
-							wp_list_categories( array( 'use_desc_for_title' => false, 'title_li' => false, 'taxonomy' => 'product_cat', 'walker' => new Basel_Walker_Category) );
-						} else {
-							foreach ( $terms as $term ) {
-								?>
-								<li><a href="#" data-val="<?php echo esc_attr( $term->slug ); ?>"><?php echo esc_attr( $term->name ); ?></a></li>
-								<?php
+							if( ! apply_filters( 'basel_show_only_parent_categories_dropdown', false ) ) {
+								wp_list_categories( array( 'use_desc_for_title' => false, 'title_li' => false, 'taxonomy' => 'product_cat', 'walker' => new Basel_Walker_Category) );
+							} else {
+							    foreach ( $terms as $term ) {
+							    	?>
+										<li><a href="#" data-val="<?php echo esc_attr( $term->slug ); ?>"><?php echo esc_attr( $term->name ); ?></a></li>
+							    	<?php
+							    }
 							}
-						}
 						?>
 					</ul>
 				</div>
@@ -1453,7 +1453,7 @@ if( ! function_exists( 'basel_show_categories_dropdown' ) ) {
 
 if( ! class_exists( 'Basel_Walker_Category' ) ) {
 	class Basel_Walker_Category extends Walker_Category {
-
+	
 		/**
 		 * Starts the element output.
 		 *
@@ -1602,20 +1602,20 @@ if( ! function_exists( 'basel_header_block_categories_menu' ) ) {
 		$opened = get_post_meta( basel_get_the_ID(), '_basel_open_categories', true );
 
 		?>
-		<div class="mega-navigation <?php if( $opened ) echo 'opened-menu'; else echo 'show-on-hover'; ?>" role="navigation">
-			<span class="menu-opener"><span class="burger-icon"></span><?php esc_html_e('Browse Categories', 'basel'); ?><span class="arrow-opener"></span></span>
-			<div class="categories-menu-dropdown basel-navigation">
-				<?php 
-				wp_nav_menu(
-					array(
-						'menu' => $categories_menu,
-						'menu_class' => 'menu',
-						'walker' => new BASEL_Mega_Menu_Walker()
-					)
-				);
-				?>
+			<div class="mega-navigation <?php if( $opened ) echo 'opened-menu'; else echo 'show-on-hover'; ?>" role="navigation">
+				<span class="menu-opener"><span class="burger-icon"></span><?php esc_html_e('Browse Categories', 'basel'); ?><span class="arrow-opener"></span></span>
+				<div class="categories-menu-dropdown basel-navigation">
+					<?php 
+						wp_nav_menu(
+							array(
+								'menu' => $categories_menu,
+								'menu_class' => 'menu',
+								'walker' => new BASEL_Mega_Menu_Walker()
+							)
+						);
+					 ?>
+				</div>
 			</div>
-		</div>
 		<?php
 	}
 }
@@ -1628,25 +1628,25 @@ if( ! function_exists( 'basel_header_block_main_nav' ) ) {
 	function basel_header_block_main_nav() {
 		$location = apply_filters( 'basel_main_menu_location', 'main-menu');
 		?>
-		<div class="main-nav site-navigation basel-navigation menu-<?php echo esc_attr( basel_get_opt('menu_align') ); ?>" role="navigation">
-			<?php 
-			if( has_nav_menu( $location ) ) {
-				wp_nav_menu(
-					array(
-						'theme_location' => $location,
-						'menu_class' => 'menu',
-						'walker' => new BASEL_Mega_Menu_Walker()
-					)
-				); 
-			} else {
-				$menu_link = get_admin_url( null, 'nav-menus.php' );
-				?>
-				<br>
-				<h5><?php printf( wp_kses( __('Create your first <a href="%s"><strong>navigation menu here</strong></a>', 'basel'), 'default'), $menu_link) ?></h5>
-				<?php
-			}
-			?>
-		</div><!--END MAIN-NAV-->
+			<div class="main-nav site-navigation basel-navigation menu-<?php echo esc_attr( basel_get_opt('menu_align') ); ?>" role="navigation">
+				<?php 
+					if( has_nav_menu( $location ) ) {
+						wp_nav_menu(
+							array(
+								'theme_location' => $location,
+								'menu_class' => 'menu',
+								'walker' => new BASEL_Mega_Menu_Walker()
+							)
+						); 
+					} else {
+						$menu_link = get_admin_url( null, 'nav-menus.php' );
+						?>
+							<br>
+							<h5><?php printf( wp_kses( __('Create your first <a href="%s"><strong>navigation menu here</strong></a>', 'basel'), 'default'), $menu_link) ?></h5>
+						<?php
+					}
+				 ?>
+			</div><!--END MAIN-NAV-->
 		<?php
 	}
 }
@@ -1670,26 +1670,26 @@ if( ! function_exists( 'basel_header_block_mobile_nav' ) ) {
 		$mobile_search_form = basel_get_opt( 'mobile_search_form' ) != '' ? basel_get_opt( 'mobile_search_form' ) : true;
 
 		?>
-		<div class="mobile-nav">
-			<?php 
-			if ( $mobile_search_form ) {
-				basel_header_block_search_extended( false, true, $ajax_args, false );
-			}
+			<div class="mobile-nav">
+				<?php 
+					if ( $mobile_search_form ) {
+						basel_header_block_search_extended( false, true, $ajax_args, false );
+					}
 
-			if( has_nav_menu( $location ) ) {
-				wp_nav_menu(
-					array(
-						'theme_location' => $location,
-						'menu_class' => 'site-mobile-menu',
-						'walker' => new BASEL_Mega_Menu_Walker()
-					)
-				);
-			}
+					if( has_nav_menu( $location ) ) {
+						wp_nav_menu(
+							array(
+								'theme_location' => $location,
+								'menu_class' => 'site-mobile-menu',
+								'walker' => new BASEL_Mega_Menu_Walker()
+							)
+						);
+					}
 
-			basel_header_block_header_links( 'mobile' );
+					basel_header_block_header_links( 'mobile' );
 
-			?>
-		</div><!--END MOBILE-NAV-->
+				 ?>
+			</div><!--END MOBILE-NAV-->
 		<?php
 	}
 }
@@ -1701,9 +1701,9 @@ if( ! function_exists( 'basel_header_block_mobile_nav' ) ) {
 if( ! function_exists( 'basel_header_block_mobile_icon' ) ) {
 	function basel_header_block_mobile_icon() {
 		?>
-		<div class="mobile-nav-icon">
-			<span class="basel-burger"></span>
-		</div><!--END MOBILE-NAV-ICON-->
+			<div class="mobile-nav-icon">
+				<span class="basel-burger"></span>
+			</div><!--END MOBILE-NAV-ICON-->
 		<?php
 	}
 }
@@ -1721,15 +1721,15 @@ if( ! function_exists( 'basel_header_block_header_links' ) ) {
 		$classes .= ( $my_account_style ) ? ' my-account-with-' . $my_account_style : '';
 		
 		if( ! empty( $links ) ) {
-			?>
+		?>
 			<div class="header-links<?php echo esc_attr( $classes ); ?>">
 				<ul>
-					<?php foreach ( $links as $link ): ?>
+						<?php foreach ( $links as $link ): ?>
 						<li class="<?php echo esc_attr( $link['class'] ); ?>"><a href="<?php echo esc_url( $link['url'] ); ?>"><?php echo wp_kses( $link['label'], 'default' ); ?></a></li>
 					<?php endforeach; ?>
 				</ul>		
 			</div>
-			<?php
+		<?php
 		}
 	}
 }
@@ -1757,7 +1757,7 @@ if( ! function_exists( 'basel_get_header_links' ) ) {
 			);
 		}
 
-		$account_text = esc_html__('Tài khoản', 'basel');
+		$account_text = esc_html__('My Account', 'basel');
 
 		if ( basel_get_opt( 'my_account_with_username' ) ) {
 			$account_text = sprintf( esc_html__( 'Hello, %s', 'basel' ), '<strong>' . esc_html( $current_user->display_name ). '</strong>' );
@@ -1771,13 +1771,13 @@ if( ! function_exists( 'basel_get_header_links' ) ) {
 					'class' => 'my-account'
 				);
 				$links[] = array(
-					'label' => esc_html__('Đăng xuất', 'basel'),
+					'label' => esc_html__('Logout', 'basel'),
 					'url' => $logout_link,
 					'class' => 'logout'
 				);
 			} else {
 				$links[] = array(
-					'label' => esc_html__('Đăng nhập', 'basel'),
+					'label' => esc_html__('Login / Register', 'basel'),
 					'url' => $account_link,
 					'class' => ( basel_get_opt( 'login_sidebar' ) && ! is_user_logged_in() ) ? 'login-side-opener' : ''
 				);
@@ -1802,208 +1802,208 @@ if( ! function_exists( 'basel_generate_header' ) ) {
 
 	}
 
-	function basel_process_child( $configuration ) {
-		foreach( $configuration as $key => $block) {
-			basel_header_block( $key, $block );
+		function basel_process_child( $configuration ) {
+			foreach( $configuration as $key => $block) {
+				basel_header_block( $key, $block );
+			}
 		}
-	}
 
-	function basel_header_block($key, $block) {
-		if( is_array($block) ) {
-			ob_start();
-			basel_process_child( $block );
-			$output = ob_get_contents();
-			ob_end_clean();
+		function basel_header_block($key, $block) {
+			if( is_array($block) ) {
+				ob_start();
+				basel_process_child( $block );
+				$output = ob_get_contents();
+				ob_end_clean();
 
-			if( ! empty( $output ) ) {
+				if( ! empty( $output ) ) {
 					// If block has child it is a div with class $key
-				echo '<div class="' . esc_attr( $key ) . '">' . PHP_EOL;
-				echo ! empty( $output ) ? $output : '';
-				echo '</div>' . PHP_EOL;
-			}
-		} else {
-			$func = 'basel_header_block_' . $block;
-			if( function_exists( $func ) ) {
-				$func();
+					echo '<div class="' . esc_attr( $key ) . '">' . PHP_EOL;
+						echo ! empty( $output ) ? $output : '';
+					echo '</div>' . PHP_EOL;
+				}
+			} else {
+				$func = 'basel_header_block_' . $block;
+				if( function_exists( $func ) ) {
+					$func();
+				}
 			}
 		}
-	}
 
-	function basel_get_header_configuration( $header = 'base' ) {
-		$configurations = array();
+		function basel_get_header_configuration( $header = 'base' ) {
+			$configurations = array();
 
-		$configurations['base'] = array(
-			'container' => array(
-				'wrapp-header' => array(
-					'logo',
-					'widget_area',
-					'right-column' => array(
-						'search',
-						'wishlist',
-						'cart',
-						'mobile_icon',
-					)
-				)
-			),
-			'navigation-wrap' => array(
+			$configurations['base'] = array(
 				'container' => array(
-					'main_nav'
-				)
-			)
-		);
-
-		$configurations['simple'] = array(
-			'container' => array(
-				'wrapp-header' => array(
-					'logo',
-					'main_nav',
-					'right-column' => array(
-						'search',
-						'wishlist',
-						'cart',
-						'mobile_icon',
+					'wrapp-header' => array(
+						'logo',
+						'widget_area',
+						'right-column' => array(
+							'search',
+							'wishlist',
+							'cart',
+							'mobile_icon',
+						)
 					)
-				)	
-			),
-		);
-
-		$configurations['split'] = array(
-			'container' => array(
-				'wrapp-header' => array(
-					'right-column left-side' => array(
-						'mobile_icon',
-						'search',
-						'wishlist',
-					),
-					'logo',
-					'main_nav',
-					'right-column' => array(
-						'header_links',
-						'cart',
-					)
-				)	
-			),
-		);
-
-		$configurations['overlap'] = array(
-			'container' => array(
-				'wrapp-header' => array(
-					'logo',
-					'main_nav',
-					'right-column' => array(
-						'mobile_icon',
-						'cart',
-						'wishlist',
-						'search',
-					)
-				)	
-			),
-		);
-
-		$configurations['logo-center'] = array(
-			'container' => array(
-				'wrapp-header' => array(
-					'widget_area',
-					'logo',
-					'right-column' => array(
-						'header_links',
-						'search',
-						'wishlist',
-						'cart',
-						'mobile_icon',
-					)
-				)
-			),
-			'navigation-wrap' => array(
-				'container' => array(
-					'main_nav'
-				)
-			)
-		);
-
-		$configurations['categories'] = array(
-			'container' => array(
-				'wrapp-header' => array(
-					'logo',
-					'main_nav',
-					'right-column' => array(
-						'wishlist',
-						'cart',
-						'mobile_icon',
-					)
-				)	
-			),
-			'secondary-header' => array(
-				'container' => array(
-					'categories_menu',
-					'search_extended',
-				)
-			)
-		);
-
-		$configurations['menu-top'] = array(
-			'navigation-wrap' => array(
-				'container' => array(
-					'mobile_icon',
-					'main_nav',
-					'widget_area',
-					'right-column' => array(
-						'search',
-						'wishlist',
-						'cart',
-					)
-				),
-			),
-			'container' => array(
-				'logo'
-			)
-		);
-
-		$configurations['shop'] = array(
-			'container' => array(
-				'wrapp-header' => array(
-					'main_nav',
-					'logo',
-					'right-column' => array(
-						'header_links',
-						'search',
-						'wishlist',
-						'cart',
-						'mobile_icon',
-					)
-				)	
-			),
-		);
-
-
-		$configurations['vertical'] = array(
-			'wrapp-header' => array(
-				'vertical-header-top' => array(
-					'logo',
-					'right-column' => array(
-						'search',
-						'wishlist',
-						'cart',
-						'mobile_icon',
-					),
 				),
 				'navigation-wrap' => array(
-					'main_nav'
-				),
-				'vertical-header-bottom' => array(
-					'header_links',
-					'widget_area',
+					'container' => array(
+						'main_nav'
+					)
 				)
-			)
-		);
+			);
 
-		if( ! isset( $configurations[$header] ) ) {
-			$header = 'base';
-		}
+			$configurations['simple'] = array(
+				'container' => array(
+					'wrapp-header' => array(
+						'logo',
+						'main_nav',
+						'right-column' => array(
+							'search',
+							'wishlist',
+							'cart',
+							'mobile_icon',
+						)
+					)	
+				),
+			);
 
-		return $configurations[$header];
+			$configurations['split'] = array(
+				'container' => array(
+					'wrapp-header' => array(
+						'right-column left-side' => array(
+							'mobile_icon',
+							'search',
+							'wishlist',
+						),
+						'logo',
+						'main_nav',
+						'right-column' => array(
+							'header_links',
+							'cart',
+						)
+					)	
+				),
+			);
 
-	} 
+			$configurations['overlap'] = array(
+				'container' => array(
+					'wrapp-header' => array(
+						'logo',
+						'main_nav',
+						'right-column' => array(
+							'mobile_icon',
+							'cart',
+							'wishlist',
+							'search',
+						)
+					)	
+				),
+			);
+
+			$configurations['logo-center'] = array(
+				'container' => array(
+					'wrapp-header' => array(
+						'widget_area',
+						'logo',
+						'right-column' => array(
+							'header_links',
+							'search',
+							'wishlist',
+							'cart',
+							'mobile_icon',
+						)
+					)
+				),
+				'navigation-wrap' => array(
+					'container' => array(
+						'main_nav'
+					)
+				)
+			);
+
+			$configurations['categories'] = array(
+				'container' => array(
+					'wrapp-header' => array(
+						'logo',
+						'main_nav',
+						'right-column' => array(
+							'wishlist',
+							'cart',
+							'mobile_icon',
+						)
+					)	
+				),
+				'secondary-header' => array(
+					'container' => array(
+						'categories_menu',
+						'search_extended',
+					)
+				)
+			);
+
+			$configurations['menu-top'] = array(
+				'navigation-wrap' => array(
+					'container' => array(
+						'mobile_icon',
+						'main_nav',
+						'widget_area',
+						'right-column' => array(
+							'search',
+							'wishlist',
+							'cart',
+						)
+					),
+				),
+				'container' => array(
+					'logo'
+				)
+			);
+
+			$configurations['shop'] = array(
+				'container' => array(
+					'wrapp-header' => array(
+						'main_nav',
+						'logo',
+						'right-column' => array(
+							'header_links',
+							'search',
+							'wishlist',
+							'cart',
+							'mobile_icon',
+						)
+					)	
+				),
+			);
+
+
+			$configurations['vertical'] = array(
+				'wrapp-header' => array(
+					'vertical-header-top' => array(
+						'logo',
+						'right-column' => array(
+							'search',
+							'wishlist',
+							'cart',
+							'mobile_icon',
+						),
+					),
+					'navigation-wrap' => array(
+						'main_nav'
+					),
+					'vertical-header-bottom' => array(
+						'header_links',
+						'widget_area',
+					)
+				)
+			);
+
+			if( ! isset( $configurations[$header] ) ) {
+				$header = 'base';
+			}
+
+			return $configurations[$header];
+			
+		} 
 }
 
 // **********************************************************************// 
@@ -2037,23 +2037,23 @@ if( ! function_exists( 'basel_header_banner' ) ) {
 
 		$banner_link = basel_get_opt( 'header_banner_link' );
 		?>
-		<div class="header-banner color-scheme-<?php echo esc_attr( basel_get_opt( 'header_banner_color' ) ); ?>">
+	    <div class="header-banner color-scheme-<?php echo esc_attr( basel_get_opt( 'header_banner_color' ) ); ?>">
 			
-			<?php if ( basel_get_opt( 'header_close_btn' ) ): ?>
-				<a href="#" class="close-header-banner"></a>
-			<?php endif; ?>
+	        <?php if ( basel_get_opt( 'header_close_btn' ) ): ?>
+	            <a href="#" class="close-header-banner"></a>
+	        <?php endif; ?>
 			
 			<?php if ( $banner_link ): ?>
-				<a href="<?php echo esc_url( $banner_link ) ?>" class="header-banner-link"></a>
-			<?php endif; ?>
+	            <a href="<?php echo esc_url( $banner_link ) ?>" class="header-banner-link"></a>
+	        <?php endif; ?>
 			
-			<div class="container header-banner-container">
-				<?php echo do_shortcode( basel_get_opt( 'header_banner_shortcode' ) ); ?>
-			</div>
+	        <div class="container header-banner-container">
+	            <?php echo do_shortcode( basel_get_opt( 'header_banner_shortcode' ) ); ?>
+	        </div>
 			
-		</div>
+	    </div>
 
-		<?php
+	    <?php
 
 	}
 
@@ -2068,135 +2068,107 @@ if( ! function_exists( 'basel_sidebar_login_form' ) ) {
 		$account_link = get_permalink( get_option( 'woocommerce_myaccount_page_id' ) );
 		if ( ! basel_get_opt( 'login_sidebar' ) || is_user_logged_in() || ! basel_woocommerce_installed() ) return;
 		?>
-		<div class="login-form-side">
-			<div class="row">
-				<div class="col-md-6 login-form-1 pd-t-30 pd-l-80 pd-l-40-mb">
-					<div class="basel-logo-wrap switch-logo-enable">
-						<a href="http://test.svietweb.com/">
-							<img src="http://test.svietweb.com/wp-content/uploads/2019/07/logo.png" alt="Ninomaxx">					
-						</a>
-					</div>
+			<div class="login-form-side">
+				<div class="widget-heading">
+					<h3 class="widget-title"><?php esc_html_e( 'Đăng nhập', 'basel' ); ?></h3>
+					<a href="#" class="widget-close"><?php esc_html_e( 'Đóng', 'basel' ); ?></a>
 				</div>
-				<div class="col-md-6 login-form-1 pd-lr-30">
-					<div class="widget-heading">
-						<!--<h3 class="widget-title"><?php esc_html_e( 'Đăng nhập', 'basel' ); ?></h3>-->
-						<a href="#" class="widget-close"><?php esc_html_e( 'Đóng', 'basel' ); ?></a>
-					</div>
+				
+				<div class="login-form">
+					<?php basel_login_form( true, $account_link ); ?>
 				</div>
-			</div>
-			<div class="container login-container">
-				<div class="row">
-					<div class="col-md-6 login-form-1 pd-lr-30">
-						<div class="pd-b-30">
-							<h2 class="pd-b-20">Tôi đã có tài khoản người dùng của<br/> NinoMaxx</h2>
-							<span>Nhập địa chỉ thư điện tử và mật khẩu để đăng nhập.</span>
-						</div>
-						<div class="login-form">
-							<?php basel_login_form( true, $account_link ); ?>
-						</div>
-
-					</div>
-					<div class="col-md-6 login-form-1 pd-lr-30">
-						<div class="pd-b-30">
-							<h2 class="pd-b-20">Tôi muốn đăng ký tài khoản người dùng của NinoMaxx</h2>
-							<span>Nếu quý khách vẫn chưa có tài khoản trên <strong>NinoMaxx</strong>, hãy sử dụng <br/> tùy chọn này để truy cập biểu mẫu đăng ký.<br/></span>
-							<span>
-								Bằng cách cung cấp cho chúng tôi thông tin chi tiết của quý khách,<br/> quá trình mua hàng trên <strong>NinoMaxx.com.vn</strong> sẽ là một trải nghiệm thú vị và nhanh chóng hơn.</span>
-							</div> 
-							<div class="register-question">
-								<!--<span class="create-account-text"><?php esc_html_e( 'Bạn chưa có tài khoản? ', 'basel' ); ?></span>-->
-								<a class="btn btn_primary btn-style-link" href="<?php echo esc_url( $account_link ); ?>?action=register"><?php esc_html_e( 'Tạo tài khoản', 'basel' ); ?></a>
-							</div>                   
-						</div>
-					</div>
+				
+				<div class="register-question">
+					<span class="create-account-text"><?php esc_html_e( 'No account yet?', 'basel' ); ?></span>
+					<a class="btn btn-style-link" href="<?php echo esc_url( $account_link ); ?>?action=register"><?php esc_html_e( 'Create an Account', 'basel' ); ?></a>
 				</div>
 			</div>
-			<?php
-		}
-
-		add_action( 'basel_after_body_open', 'basel_sidebar_login_form', 10 );
+		<?php
 	}
+
+	add_action( 'basel_after_body_open', 'basel_sidebar_login_form', 10 );
+}
 
 // **********************************************************************// 
 // Login form HTML
 // **********************************************************************// 
-	if( ! function_exists( 'basel_login_form' ) ) {
-		function basel_login_form( $echo = true, $action = false, $message = false, $hidden = false, $redirect = false ) {
-			$vk_app_id         = basel_get_opt( 'vk_app_id' );
-			$vk_app_secret     = basel_get_opt( 'vk_app_secret' );
-			$fb_app_id         = basel_get_opt( 'fb_app_id' );
-			$fb_app_secret     = basel_get_opt( 'fb_app_secret' );
-			$goo_app_id        = basel_get_opt( 'goo_app_id' );
-			$goo_app_secret    = basel_get_opt( 'goo_app_secret' );
-			$style             = basel_get_opt( 'alt_social_login_btns_style' ) ? 'basel-social-alt-style' : '';
+if( ! function_exists( 'basel_login_form' ) ) {
+	function basel_login_form( $echo = true, $action = false, $message = false, $hidden = false, $redirect = false ) {
+		$vk_app_id         = basel_get_opt( 'vk_app_id' );
+		$vk_app_secret     = basel_get_opt( 'vk_app_secret' );
+		$fb_app_id         = basel_get_opt( 'fb_app_id' );
+		$fb_app_secret     = basel_get_opt( 'fb_app_secret' );
+		$goo_app_id        = basel_get_opt( 'goo_app_id' );
+		$goo_app_secret    = basel_get_opt( 'goo_app_secret' );
+		$style             = basel_get_opt( 'alt_social_login_btns_style' ) ? 'basel-social-alt-style' : '';
+		
+		ob_start();
+		?>
+		<form method="post" class="login woocommerce-form woocommerce-form-login <?php if ( $hidden ) echo 'hidden-form'; ?>" <?php echo ( ! empty( $action ) ) ? 'action="' . esc_url( $action ) . '"' : ''; ?> <?php if ( $hidden ) echo 'style="display:none;"'; ?>>
 
-			ob_start();
-			?>
-			<form method="post" class="login woocommerce-form woocommerce-form-login <?php if ( $hidden ) echo 'hidden-form'; ?>" <?php echo ( ! empty( $action ) ) ? 'action="' . esc_url( $action ) . '"' : ''; ?> <?php if ( $hidden ) echo 'style="display:none;"'; ?>>
+			<?php do_action( 'woocommerce_login_form_start' ); ?>
 
-				<?php do_action( 'woocommerce_login_form_start' ); ?>
+			<?php echo true == $message ? wpautop( wptexturize( $message ) ) : ''; ?>
 
-				<?php echo true == $message ? wpautop( wptexturize( $message ) ) : ''; ?>
+			<p class="woocommerce-FormRow woocommerce-FormRow--wide form-row form-row-wide form-row-username">
+				<label for="username"><?php esc_html_e( 'Tên đăng nhập hoặc email', 'basel' ); ?>&nbsp;<span class="required">*</span></label>
+				<input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="username" id="username" autocomplete="username" value="<?php if ( ! empty( $_POST['username'] ) ) echo esc_attr( $_POST['username'] ); ?>" />
+			</p>
+			<p class="woocommerce-FormRow woocommerce-FormRow--wide form-row form-row-wide form-row-password">
+				<label for="password"><?php esc_html_e( 'Mật khẩu', 'basel' ); ?>&nbsp;<span class="required">*</span></label>
+				<input class="woocommerce-Input woocommerce-Input--text input-text" type="password" name="password" id="password" autocomplete="current-password" />
+			</p>
 
-				<p class="woocommerce-FormRow woocommerce-FormRow--wide form-row form-row-wide form-row-username">
-					<!--<label for="username"><?php esc_html_e( 'Tên đăng nhập hoặc email', 'basel' ); ?>&nbsp;<span class="required">*</span></label>-->				
-					<input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="username" id="username" placeholder="<?php esc_html_e( 'Tên đăng nhập hoặc email', 'basel' ); ?>" autocomplete="username" value="<?php if ( ! empty( $_POST['username'] ) ) echo esc_attr( $_POST['username'] ); ?>" />
-				</p>
-				<p class="woocommerce-FormRow woocommerce-FormRow--wide form-row form-row-wide form-row-password">
-					<!--<label for="password"><?php esc_html_e( 'Mật khẩu', 'basel' ); ?>&nbsp;<span class="required">*</span></label>-->
-					<input class="woocommerce-Input woocommerce-Input--text input-text" type="password" name="password" placeholder="<?php esc_html_e( 'Mật khẩu', 'basel' ); ?>" id="password" autocomplete="current-password" />
-				</p>
+			<?php do_action( 'woocommerce_login_form' ); ?>
 
-				<?php do_action( 'woocommerce_login_form' ); ?>
+			<p class="form-row">
+				<?php wp_nonce_field( 'woocommerce-login', 'woocommerce-login-nonce' ); ?>
+				<?php if ( $redirect ): ?>
+					<input type="hidden" name="redirect" value="<?php echo esc_url( $redirect ); ?>" />
+				<?php endif ?>
+				<button type="submit" class="woocommerce-button button woocommerce-form-login__submit" name="login" value="<?php esc_attr_e( 'Log in', 'basel' ); ?>"><?php esc_html_e( 'Log in', 'basel' ); ?></button>
+			</p>
 
-				<p class="form-row">
-					<?php wp_nonce_field( 'woocommerce-login', 'woocommerce-login-nonce' ); ?>
-					<?php if ( $redirect ): ?>
-						<input type="hidden" name="redirect" value="<?php echo esc_url( $redirect ); ?>" />
-					<?php endif ?>
-					<button type="submit" class="btn_primary" name="login" value="<?php esc_attr_e( 'Đăng nhập', 'basel' ); ?>"><?php esc_html_e( 'Đăng nhập', 'basel' ); ?></button>
-				</p>
-
-				<div class="login-form-footer">
-					<a href="<?php echo esc_url( wp_lostpassword_url() ); ?>" class="woocommerce-LostPassword lost_password"><?php esc_html_e( 'Quý khách đã quên mật khẩu?', 'basel' ); ?></a>
-					<label class="woocommerce-form__label woocommerce-form__label-for-checkbox woocommerce-form-login__rememberme">
-						<input class="woocommerce-form__input woocommerce-form__input-checkbox" name="rememberme" type="checkbox" value="forever" /> <span><?php esc_html_e( 'Nhớ mật khẩu', 'basel' ); ?></span>
-					</label>
-				</div>
-
-				<?php if ( class_exists( 'BASEL_Auth' ) && ( ( ! empty( $fb_app_id ) && ! empty( $fb_app_secret ) ) || ( ! empty( $goo_app_id ) && ! empty( $goo_app_secret ) ) || ( ! empty( $vk_app_id ) && ! empty( $vk_app_secret ) ) ) ): ?>
+			<div class="login-form-footer">
+				<a href="<?php echo esc_url( wp_lostpassword_url() ); ?>" class="woocommerce-LostPassword lost_password"><?php esc_html_e( 'Lost your password?', 'basel' ); ?></a>
+				<label class="woocommerce-form__label woocommerce-form__label-for-checkbox woocommerce-form-login__rememberme">
+					<input class="woocommerce-form__input woocommerce-form__input-checkbox" name="rememberme" type="checkbox" value="forever" /> <span><?php esc_html_e( 'Nhớ mật khẩu', 'basel' ); ?></span>
+				</label>
+			</div>
+			
+			<?php if ( class_exists( 'BASEL_Auth' ) && ( ( ! empty( $fb_app_id ) && ! empty( $fb_app_secret ) ) || ( ! empty( $goo_app_id ) && ! empty( $goo_app_secret ) ) || ( ! empty( $vk_app_id ) && ! empty( $vk_app_secret ) ) ) ): ?>
 				<span class="social-login-title"><?php esc_html_e('Or login with', 'basel'); ?></span>
 				<div class="basel-social-login <?php echo esc_attr( $style ); ?>">
 					<?php if ( ! empty( $fb_app_id ) && ! empty( $fb_app_secret ) ): ?>
-					<div class="social-login-btn">
-						<a href="<?php echo add_query_arg('social_auth', 'facebook', wc_get_page_permalink('myaccount')); ?>" class="btn login-fb-link"><?php esc_html_e( 'Facebook', 'basel' ); ?></a>
-					</div>
-				<?php endif ?>
-				<?php if ( ! empty( $goo_app_id ) && ! empty( $goo_app_secret ) ): ?>
-				<div class="social-login-btn">
-					<a href="<?php echo add_query_arg('social_auth', 'google', wc_get_page_permalink('myaccount')); ?>" class="btn login-goo-link"><?php esc_html_e( 'Google', 'basel' ); ?></a>
+						<div class="social-login-btn">
+							<a href="<?php echo add_query_arg('social_auth', 'facebook', wc_get_page_permalink('myaccount')); ?>" class="btn login-fb-link"><?php esc_html_e( 'Facebook', 'basel' ); ?></a>
+						</div>
+					<?php endif ?>
+					<?php if ( ! empty( $goo_app_id ) && ! empty( $goo_app_secret ) ): ?>
+						<div class="social-login-btn">
+							<a href="<?php echo add_query_arg('social_auth', 'google', wc_get_page_permalink('myaccount')); ?>" class="btn login-goo-link"><?php esc_html_e( 'Google', 'basel' ); ?></a>
+						</div>
+					<?php endif ?>
+					<?php if ( ! empty( $vk_app_id ) && ! empty( $vk_app_secret ) ): ?>
+						<div class="social-login-btn">
+							<a href="<?php echo add_query_arg('social_auth', 'vkontakte', wc_get_page_permalink('myaccount')); ?>" class="btn login-vk-link"><?php esc_html_e( 'VKontakte', 'basel' ); ?></a>
+						</div>
+					<?php endif ?>
 				</div>
 			<?php endif ?>
-			<?php if ( ! empty( $vk_app_id ) && ! empty( $vk_app_secret ) ): ?>
-			<div class="social-login-btn">
-				<a href="<?php echo add_query_arg('social_auth', 'vkontakte', wc_get_page_permalink('myaccount')); ?>" class="btn login-vk-link"><?php esc_html_e( 'VKontakte', 'basel' ); ?></a>
-			</div>
-		<?php endif ?>
-	</div>
-<?php endif ?>
 
-<?php do_action( 'woocommerce_login_form_end' ); ?>
+			<?php do_action( 'woocommerce_login_form_end' ); ?>
 
-</form>
+		</form>
 
-<?php
+		<?php
 
-if( $echo ) {
-	echo ob_get_clean();
-} else {
-	return ob_get_clean();
-}
-}
+		if( $echo ) {
+			echo ob_get_clean();
+		} else {
+			return ob_get_clean();
+		}
+	}
 }
 
 // **********************************************************************// 
@@ -2261,56 +2233,56 @@ if ( ! function_exists( 'basel_sticky_toolbar_template' ) ) {
 		}
 
 		?>
-		<div class="basel-toolbar icons-design-line<?php echo esc_attr( $classes ); ?>">
-			<?php
-			foreach ( $fields['enabled'] as $key => $value ) {
-				switch ( $key ) {
-					case 'wishlist':
+			<div class="basel-toolbar icons-design-line<?php echo esc_attr( $classes ); ?>">
+		<?php
+		foreach ( $fields['enabled'] as $key => $value ) {
+			switch ( $key ) {
+				case 'wishlist':
 					basel_sticky_toolbar_wishlist_template();
 					break;
-					case 'cart':
+				case 'cart':
 					basel_sticky_toolbar_cart_template();
 					break;
-					case 'compare':
+				case 'compare':
 					basel_sticky_toolbar_compare_template();
 					break;
-					case 'search':
+				case 'search':
 					basel_sticky_toolbar_search_template();
 					break;
-					case 'account':
+				case 'account':
 					basel_sticky_toolbar_account_template();
 					break;
-					case 'home':
+				case 'home':
 					basel_sticky_toolbar_page_link_template( $key );
 					break;
-					case 'blog':
+				case 'blog':
 					basel_sticky_toolbar_page_link_template( $key );
 					break;
-					case 'shop':
+				case 'shop':
 					basel_sticky_toolbar_page_link_template( $key );
 					break;
-					case 'mobile':
+				case 'mobile':
 					basel_sticky_toolbar_mobile_menu_template();
 					break;
-					case 'sidebar':
+				case 'sidebar':
 					basel_sticky_sidebar_button( false, true );
 					break;
-					case 'search':
+				case 'search':
 					basel_sticky_toolbar_search_template();
 					break;
-					case 'link_1':
+				case 'link_1':
 					basel_sticky_toolbar_custom_link_template( $key );
 					break;
-					case 'link_2':
+				case 'link_2':
 					basel_sticky_toolbar_custom_link_template( $key );
 					break;
-					case 'link_3':
+				case 'link_3':
 					basel_sticky_toolbar_custom_link_template( $key );
 					break;
-				}
 			}
-			?>
-		</div>
+		}
+		?>
+			</div>
 		<?php
 
 	}
@@ -2333,21 +2305,21 @@ if ( ! function_exists( 'basel_sticky_toolbar_custom_link_template' ) ) {
 		$wrapper_classes .= isset( $icon['id'] ) && $icon['id'] ? ' basel-with-icon' : '';
 
 		?>
-		<?php if ( $url && $text ) : ?>
-			<div class="basel-toolbar-link basel-toolbar-item<?php echo esc_attr( $wrapper_classes ); ?>">
-				<a href="<?php echo esc_url( $url ); ?>">
-					<span class="basel-toolbar-icon">
-						<?php if ( isset( $icon['id'] ) && $icon['id'] ) : ?>
-							<?php echo wp_get_attachment_image( $icon['id'] ); ?>
-						<?php endif; ?>
-					</span>
+			<?php if ( $url && $text ) : ?>
+				<div class="basel-toolbar-link basel-toolbar-item<?php echo esc_attr( $wrapper_classes ); ?>">
+					<a href="<?php echo esc_url( $url ); ?>">
+						<span class="basel-toolbar-icon">
+							<?php if ( isset( $icon['id'] ) && $icon['id'] ) : ?>
+								<?php echo wp_get_attachment_image( $icon['id'] ); ?>
+							<?php endif; ?>
+						</span>
 
-					<span class="basel-toolbar-label">
-						<?php esc_html_e( $text ); ?>
-					</span>
-				</a>
-			</div>
-		<?php endif; ?>
+						<span class="basel-toolbar-label">
+							<?php esc_html_e( $text ); ?>
+						</span>
+					</a>
+				</div>
+			<?php endif; ?>
 		<?php
 	}
 }
@@ -2491,7 +2463,7 @@ if ( ! function_exists( 'basel_sticky_toolbar_account_template' ) ) {
 		<div class="basel-toolbar-account basel-toolbar-item<?php echo esc_attr( $classes ); ?>">
 			<a href="<?php echo esc_url( get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) ); ?>">
 				<span class="basel-toolbar-label">
-					<?php esc_html_e( 'Tài khoản', 'basel' ); ?>
+					<?php esc_html_e( 'My account', 'basel' ); ?>
 				</span>
 			</a>
 		</div>
@@ -2510,17 +2482,17 @@ if ( ! function_exists( 'basel_sticky_toolbar_page_link_template' ) ) {
 
 		switch ( $key ) {
 			case 'blog':
-			$url  = get_permalink( get_option( 'page_for_posts' ) );
-			$text = esc_html__( 'Blog', 'basel' );
-			break;
+				$url  = get_permalink( get_option( 'page_for_posts' ) );
+				$text = esc_html__( 'Blog', 'basel' );
+				break;
 			case 'home':
-			$url  = get_home_url();
-			$text = esc_html__( 'Home', 'basel' );
-			break;
+				$url  = get_home_url();
+				$text = esc_html__( 'Home', 'basel' );
+				break;
 			case 'shop':
-			$url  = basel_woocommerce_installed() ? get_permalink( wc_get_page_id( 'shop' ) ) : get_home_url();
-			$text = esc_html__( 'Shop', 'basel' );
-			break;
+				$url  = basel_woocommerce_installed() ? get_permalink( wc_get_page_id( 'shop' ) ) : get_home_url();
+				$text = esc_html__( 'Shop', 'basel' );
+				break;
 		}
 
 		?>

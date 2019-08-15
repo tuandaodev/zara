@@ -72,17 +72,17 @@ if ( ! function_exists( 'basel_add_to_compare_btn' ) ) {
 	}
 }
 
-if ( ! function_exists( 'basel_add_to_compare_single_btn' ) ) {
-	/**
-	 * Add product to comapre button on single product
-	 *
-	 * @since 4.4
-	 */
-	function basel_add_to_compare_single_btn() {
-		global $product;
-		echo '<a class="basel-compare-btn button" href="' . esc_url( basel_get_compare_page_url() ) . '" data-added-text="' . esc_html__('Compare products', 'basel') . '" data-id="' . esc_attr( $product->get_id() ) . '">' . esc_html__('Compare', 'basel') . '</a>';
-	}
-}
+// if ( ! function_exists( 'basel_add_to_compare_single_btn' ) ) {
+// 	/**
+// 	 * Add product to comapre button on single product
+// 	 *
+// 	 * @since 4.4
+// 	 */
+// 	function basel_add_to_compare_single_btn() {
+// 		global $product;
+// 		echo '<a class="basel-compare-btn button" href="' . esc_url( basel_get_compare_page_url() ) . '" data-added-text="' . esc_html__('Compare products', 'basel') . '" data-id="' . esc_attr( $product->get_id() ) . '">' . esc_html__('Compare', 'basel') . '</a>';
+// 	}
+// }
 
 
 if ( ! function_exists( 'basel_compare_json_response' ) ) {

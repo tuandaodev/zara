@@ -1439,7 +1439,7 @@ if( ! function_exists( 'basel_product_instagram' ) ) {
 		$hashtag = get_post_meta(get_the_ID(),  '_basel_product_hashtag', true );
 		if( empty( $hashtag ) ) return;
 		?>
-			<div class="basel-product-instagram">
+			<!--<div class="basel-product-instagram">
 				<p class="product-instagram-intro"><?php printf( wp_kses( __('Tag your photos with <span>%s</span> on Instagram.', 'basel') , array('span' => array())), $hashtag ); ?></p>
 				<?php echo basel_shortcode_instagram( array(
 					'username' => esc_html( $hashtag ),
@@ -1451,7 +1451,7 @@ if( ! function_exists( 'basel_product_instagram' ) ) {
 					'rounded' => 0,
 					'per_row' => 4
 				) ); ?>
-			</div>
+</div>-->
 		<?php
 	}
 }
@@ -2264,7 +2264,7 @@ if ( ! function_exists( 'basel_my_account_navigation' ) ) {
 			$items['dokan'] = esc_html__( 'Vendor dashboard', 'basel' );
 		}
 	
-		$items['customer-logout'] = esc_html__( 'Logout', 'basel' );
+		$items['customer-logout'] = esc_html__( 'Đăng xuất', 'basel' );
 
 		return $items;
 	}
@@ -2334,7 +2334,7 @@ if( ! function_exists( 'basel_my_account_wishlist_add_nav' ) ) {
 		?>
 			<div class="basel-my-account-sidebar">
 				<?php if ( !function_exists( 'basel_my_account_title' ) ): ?>
-					<h3 class="woocommerce-MyAccount-title entry-title"><?php echo esc_html__( 'My account', 'basel' ); ?></h3>
+					<h3 class="woocommerce-MyAccount-title entry-title"><?php echo esc_html__( 'Tài khoản của tôi', 'basel' ); ?></h3>
 				<?php endif; ?>
 				<?php wc_get_template('myaccount/navigation.php'); ?>
 				<?php if ( is_active_sidebar( $sidebar_name ) ): ?>

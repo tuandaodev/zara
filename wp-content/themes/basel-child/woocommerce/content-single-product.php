@@ -82,7 +82,7 @@ if ( function_exists( 'WC' ) && WC()->version >= '3.4' ) {
 							do_action( 'woocommerce_before_single_product_summary' );
 							?>
 						</div>
-						<div class="<?php echo esc_attr( $product_summary_class ); ?> summary entry-summary">
+						<div class="<?php echo esc_attr( $product_summary_class ); ?> summary entry-summary content_single_product" id="myHeader">
 							<div class="summary-inner <?php if( $product_design == 'compact' ) echo 'basel-scroll'; ?>">
 								<div class="basel-scroll-content">
 									<?php
@@ -101,24 +101,32 @@ if ( function_exists( 'WC' ) && WC()->version >= '3.4' ) {
 									?>
 
 									<?php if ( $product_design != 'alt' && $product_design != 'sticky' && basel_get_opt( 'product_share' ) ): ?>
-										<div class="product-share">
+										<!--<div class="product-share">
 											<span class="share-title"><?php _e('Share', 'basel'); ?></span>
 											<?php echo basel_shortcode_social( array( 'type' => basel_get_opt( 'product_share_type' ), 'size' => 'small', 'align' => 'left' ) ); ?>
-										</div>
+										</div>-->
 									<?php endif ?>
 								</div>
 							</div>
+
 							<!-- Product more infomation-->
 							<div class="product_detail">
 								<ul>
 									<li><button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">THÀNH PHẦN VÀ LƯU Ý</button></li>
 									<li><button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">KIỂM TRA TÌNH TRẠNG CÒN HÀNG TẠI CỬA HÀNG</button></li>
 									<li><button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">GỬI, ĐỔI VÀ HOÀN TRẢ HÀNG</button></li>
-									<li><a href="#">CHIA SẺ</a></li>
+									<li class="popup_share" onclick="myFunction()">Chia sẻ
+										<div class="popuptext" id="myPopup">
+											<?php echo basel_shortcode_social( array( 'type' => basel_get_opt( 'product_share_type' ), 'size' => 'small', 'align' => 'left' ) ); ?>
+										</div>
+									</li>
+
+
 								</ul>
 							</div>
 							<!-- Product more infomation-->
 						</div>
+						
 
 
 					</div><!-- .summary -->
@@ -155,7 +163,9 @@ if ( function_exists( 'WC' ) && WC()->version >= '3.4' ) {
 
 		<?php if( $product_design != 'compact' ): ?>
 
-			<div class="product-tabs-wrapper">
+			<!--Short Description-->			
+
+			<!--<div class="product-tabs-wrapper">
 				<div class="container">
 					<div class="row">
 						<div class="col-sm-12">
@@ -167,12 +177,13 @@ if ( function_exists( 'WC' ) && WC()->version >= '3.4' ) {
 							 * @hooked woocommerce_upsell_display - 15
 							 * @hooked woocommerce_output_related_products - 20
 							 */
-							do_action( 'woocommerce_after_single_product_summary' );
+							//do_action( 'woocommerce_after_single_product_summary' );
 							?>
 						</div>
 					</div>	
 				</div>
-			</div>
+			</div>-->
+			<!--Short Description-->	
 
 		<?php endif ?>
 
@@ -210,5 +221,36 @@ if ( function_exists( 'WC' ) && WC()->version >= '3.4' ) {
 				modal.style.display = "none";
 			}
 		}
+
+		// //Popup social share 
+		// function myFunction() {
+		// 	var popup = document.getElementById("myPopup");
+		// 	popup.classList.toggle("show");
+		// }
+
+
+		
+		// window.onscroll = function() {myFunction()};
+
+		// var header = document.getElementById("myHeader");
+		// var sticky = header.offsetTop;
+
+		// function myFunction() {
+		// 	if (window.pageYOffset > sticky) {
+		// 		header.classList.add("sticky_detail");
+		// 	} else {
+		// 		header.classList.remove("sticky_detail");
+		// 	}
+		// }
+
 	</script>
+
+	<script>
+		// When the user clicks on div, open the popup
+		function myFunction() {
+			var popup = document.getElementById("myPopup");
+			popup.classList.toggle("show");
+		}
+	</script>
+
 
