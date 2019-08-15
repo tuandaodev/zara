@@ -37,6 +37,8 @@ function change_existing_currency_symbol( $currency_symbol, $currency ) {
 }
 
 
+require_once('tdfunctions.php');
+
 /*
  * Add quickbuy button go to cart after click
  */

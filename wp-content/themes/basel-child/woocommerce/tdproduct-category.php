@@ -18,7 +18,7 @@
 defined( 'ABSPATH' ) || exit;
 
 if( basel_is_woo_ajax() === 'fragments' ) {
-	basel_woocommerce_main_loop( true );
+	td_basel_woocommerce_main_loop( true );
 	die();
 }
 
@@ -110,8 +110,7 @@ if ( $have_posts() ) {
 			 * @hooked WC_Structured_Data::generate_product_data() - 10
 			 */
 			do_action( 'woocommerce_shop_loop' );
-
-			wc_get_template_part( 'content', 'product' );
+			wc_get_template_part( 'tdcontent', 'product' );
 		}
 	}
 

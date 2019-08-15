@@ -33,6 +33,9 @@ if ( ! $product || ( ! $is_slider && ! $product->is_visible() ) ) return;
 basel_set_loop_prop( 'woocommerce_loop', (int)basel_loop_prop( 'woocommerce_loop' ) + 1 );
 $woocommerce_loop = basel_loop_prop( 'woocommerce_loop' );
 
+//td add codes
+basel_set_loop_prop( 'progress_bar', false );
+
 // Extra post classes
 $classes = array( 'product-grid-item' );
 
@@ -55,9 +58,9 @@ $classes[] = 'product';
 
 $products_columns = basel_loop_prop( 'products_columns' );
 
-if( $different_sizes && in_array( $woocommerce_loop, basel_get_wide_items_array( $different_sizes ) ) ){
-	basel_set_loop_prop( 'double_size', true );
-}
+// if( $different_sizes && in_array( $woocommerce_loop, basel_get_wide_items_array( $different_sizes ) ) ){
+// 	basel_set_loop_prop( 'double_size', true );
+// }
 
 $xs_columns = (int) basel_get_opt( 'products_columns_mobile' ) ? (int) basel_get_opt( 'products_columns_mobile' ) : 2;
 $xs_size = 12 / $xs_columns;
@@ -65,10 +68,12 @@ $xs_size = 12 / $xs_columns;
 if ( $products_columns == 1 ) $xs_size = 12;
 
 if( ! $is_slider ){
-	$classes[] = basel_get_grid_el_class( $woocommerce_loop , $products_columns, $different_sizes, $xs_size );
+	$classes[] = td_basel_get_grid_el_class( $woocommerce_loop , $products_columns, $different_sizes, $xs_size );
 }else{
 	$classes[] = 'product-in-carousel';
 }
+
+
 
 //WC 3.4
 $post_class = 'post_class';
@@ -84,6 +89,6 @@ if ( function_exists( 'WC' ) && WC()->version >= '3.4' ) {
 	</div>
 <?php 
 
-if( ! $is_slider && ! basel_loop_prop( 'products_masonry' ) && $current_view != 'list' ){
-	echo basel_get_grid_clear( $woocommerce_loop, $products_columns );
-}
+// if( ! $is_slider && ! basel_loop_prop( 'products_masonry' ) && $current_view != 'list' ){
+// 	echo basel_get_grid_clear( $woocommerce_loop, $products_columns );
+// }
